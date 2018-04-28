@@ -9,7 +9,7 @@ class Museo(models.Model):
 	descripcion_entidad = models.TextField(null=True)	#Ya que hay museos con este campo vacío
 	horario = models.CharField(max_length=150, null=True, blank=True)	#Blank es para admitir texto vacío solo en CharField
 	equipamiento = models.TextField(null=True)
-	transporte = models.CharField(max_length=150)
+	transporte = models.CharField(max_length=150, null=True, blank=True)
 	descripcion = models.TextField(null=True)
 	accesibilidad = models.IntegerField()
 	content_url =  models.CharField(max_length=150)
@@ -31,13 +31,13 @@ class Museo(models.Model):
 
 
 class Configuracion(models.Model):
-	favoritos = models.ManyToManyField(Museo, related_name='configuraciones', null=True)
+	favoritos = models.ManyToManyField(Museo, related_name='configuraciones')
 	usuario = models.OneToOneField(User, related_name='config', null=False)
 	
 
 
 
 class Comentario(models.Model):
-	museo = models.ForeignKey(Museo, related_name='comentarios', null=False)	#Un museo puede tener varios comentarios, pero un comentario sólo puede estar en un museo (Museo 1 - N Comentarios)
+	museo = models.ForeignKey(Museo, related_name='comentarios', null=False, blank=False)	#Un museo puede tener varios comentarios, pero un comentario sólo puede estar en un museo (Museo 1 - N Comentarios)
 	configuracion =	models.ForeignKey(Configuracion, related_name='comentarios', null=False) #Un usuario puede tener varios comentarios, pero un comentario es sólo de un usuario (Usuario 1 - N Comentarios)
 	comentario = models.TextField()
