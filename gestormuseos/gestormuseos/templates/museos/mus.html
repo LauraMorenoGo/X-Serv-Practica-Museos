@@ -1,0 +1,32 @@
+{% extends 'museos/base.html' %}	<!--Hereda de base.html-->
+
+{% block body %}
+    
+    <h1><b><u>{{museos.nombre}}</u></b></h1><br><br>
+
+    <b>Descripción del museo:</b><br>
+
+    <br><li>{{museos.descripcion_entidad}} </li><br>
+
+    <b>Horario del museo:</b><br>
+
+    <br><li>{{museos.horario}} </li><br>
+
+    <b>Transporte:</b><br>
+
+    <br><li>{{museos.transporte}} </li><br>
+
+    <b>Dirección:</b><br>
+
+    <br><li>{{museos.clase_via}} {{museos.nombre_via}} {{museos.numero_via}} </li><br>
+    
+    <b>Los comentarios de los usuarios registrados son los siguientes:</b><br>
+
+    {% for comentario in comentarios %}
+            <br><li>{{comentario.configuracion}} -> {{comentario.comentario}} </li><br>
+    {% endfor %}
+    
+
+    <br><b><a href='/'>Volver a la página principal</a><br><br><a href='/admin'>Ir a la página de configuración</a></b><br><br>
+
+{% endblock %}

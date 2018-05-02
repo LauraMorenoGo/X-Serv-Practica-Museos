@@ -55,11 +55,11 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'gestormuseos.urls'
 
 
-print ("El base dir de template es %s" % os.path.join(BASE_DIR, '/gestormuseos/templates'))
+print ("El base dir de template es %s" % os.path.join(BASE_DIR, 'gestormuseos/templates'))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '/gestormuseos/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'gestormuseos/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -12,6 +12,7 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^museos/', include(museosurls)),
-    url(r'^usuario/', views.usuario),
+    url(r'^usuario$', views.usuario),
+    url(r'^usuario/\d+', views.usuario),
     url(r'^$', views.barra)
 ]

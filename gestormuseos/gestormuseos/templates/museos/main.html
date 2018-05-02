@@ -1,0 +1,16 @@
+{% extends 'museos/base.html' %}	<!--Hereda de base.html-->
+
+{% block body %}
+    <b>Museos registrados:</b><br>
+
+    {% for museo in museos %}
+        <br><li><a href='/museos/{{museo.id}}'>{{museo.nombre}}</li></a>
+    {% endfor %}
+
+    <br><b>Museos favoritos de gente registrada:</b><br>
+
+    {% for configuracion in configuraciones %}
+        <br><li><a href='/usuario/{{configuracion.id}}'> {{configuracion.usuario}} </li></a>
+    {% endfor %}
+{% endblock %}
+
