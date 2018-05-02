@@ -48,13 +48,13 @@ def museo_detalle(request, id):
     context['museos'] = museos
     context['comentarios'] = comentarios
 
-    ##Investigación por mi cuenta de try, except
+    #try, except
     #try:
         #museo2 = Museo.objects.get(id=id)
     #except:    
         #raise    #levanta una excepción  
 
-    ##Si no usamos try y except
+    #Otra opción
     #raise Exception(museo)
     
     return render(request, 'museos/mus.html', context)
