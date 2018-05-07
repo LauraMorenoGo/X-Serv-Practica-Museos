@@ -2,10 +2,10 @@
 
 {% block body %}
 
-    Los museos favoritos de {{usuarios.usuario}} son:<br>
+    Los museos favoritos de {{usuario.usuario}} son:<br>
 
     {% for favorito in favoritos %}
-        <br><li><a href='/museos/{{favorito.id}}'> {{favorito.favoritos}} </li></a>
+        <br><li><a href='/museos/{{favorito.id}}'> {{favorito.nombre}} </li></a>
     {% endfor %}
     
 

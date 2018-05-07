@@ -1,72 +1,60 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import View
 from .models import Museo, Configuracion, Comentario
 
-def barra(request):
 
-    context = {}
+class Barra(View):  #View es una clase de la que heredo
 
-    museos = Museo.objects.all()
-    configuraciones = Configuracion.objects.all()
+    def get(self, request):
+        context = {}
 
-    context['museos'] = museos
-    context['configuraciones'] = configuraciones
+        museos = Museo.objects.all()
+        configuraciones = Configuracion.objects.all()
 
-    return render(request, 'museos/main.html', context)
+        context['museos'] = museos
+        context['configuraciones'] = configuraciones
 
-
-def usuario(request, id):
-
-    context = {}
-
-    usuarios = Configuracion.objects.filter(id=id).first()
-
-    context['usuarios'] = usuarios
-
-    return render(request, 'museos/usu.html', context)
+        return render(request, 'museos/main.html', context)
 
 
 
-#    lista = Configuracion.objects.all()
-#    for pag in lista:
-#        usuario = pag.usuario
-#        respuesta = "Los museos favoritos de " + str(usuario) + " son:<br>"
+class Usuario(View):
 
-#        respuesta += str(pag.favoritos) + "<br>"
-#        respuesta += "<a href='/'>Volver a la página principal</a><br><a href='/admin'>Ir a la página de configuración</a>"
+    def get(self, request, id):
 
-#    return HttpResponse(respuesta)
+        context = {}
 
+        usuarios = Configuracion.objects.exclude(id=id)
 
-def museo_detalle(request, id):
+        try:
+            usuario = Configuracion.objects.get(id=id)
+        except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
+            usuario = None
 
-    context = {}
+        favoritos = usuario.favoritos.all()
 
-    museos = Museo.objects.filter(id=id).first()
-    comentarios = Comentario.objects.filter(museo__id=id)   #Lo que hace es filtrar por el id del museo y obtener los comentarios de ese museo
+        context['usuario'] = usuario
+        context['usuarios'] = usuarios
+        context['favoritos'] = favoritos
 
-    context['museos'] = museos
-    context['comentarios'] = comentarios
-
-    #try, except
-    #try:
-        #museo2 = Museo.objects.get(id=id)
-    #except:    
-        #raise    #levanta una excepción  
-
-    #Otra opción
-    #raise Exception(museo)
+        return render(request, 'museos/usu.html', context)
     
-    return render(request, 'museos/mus.html', context)
 
-    #for pag in lista:
-    #    respuesta ="Los comentarios del museo: " + pag.museo + "son los siguientes:<br>"
-    #    respuesta += pag.comentario + "<br>"
-    #    respuesta += "<a href='/'>Volver a la página principal</a><br><a href='/admin'>Ir a la página de configuración</a>"
+class MuseoDetalle(View):
 
-    #    respuesta += str(pag.favoritos)
+    def get(self, request, id):
 
-    #return HttpResponse(respuesta)
+        context = {}
 
-#def todos_museos(request):
+        museo = Museo.objects.filter(id=id).first()
+
+        context['museo'] = museo
+        context['comentarios'] = museo.comentarios.all()
+
+        
+        return render(request, 'museos/mus.html', context)
+
+
+    
 

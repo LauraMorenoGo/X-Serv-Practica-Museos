@@ -1,13 +1,5 @@
 {% load staticfiles %}
-    <html>
-    <head></head>
-    <body>
-        {% block body %}
-    
-        {% endblock %}
 
-    </body>
-    </html>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -15,7 +7,7 @@
     <meta charset="utf-8">
     <title>Museos de Madrid</title>
  
-        <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"  type="text/css"  href="{% static 'style.css' %}" >
 </head>
  
 <body>
@@ -29,22 +21,29 @@
  
         <nav>
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Acerca de</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li class="menu"><a href="/">Página principal</a></li>
+                <li class="menu"><a href="/museos">Museos</a></li>
+                <li class="menu"><a href='/usuario'>Museos favoritos de usuarios registrados</a></li>
+                <li class="menu"><a href='/admin'>Página de configuración</a></li>
             </ul>
         </nav><!-- / nav -->
  
     </header><!-- / #main-header -->
  
     
-    <section id="main-content">
-    
-        <article>
-            <header>
-                <h1>Página museos de Madrid</h1>
-            </header>
+    <div id="main-content" class="main-body">
+        <div class="head-body">
             
+            {% block head %}
+                <h1>Página algo que no quiero acordarme</h1>
+            {% endblock %}
+        </div>
+        <div class="body-body">
+            {% block body %}
+                
+            {% endblock %}
+        </div>
+    </div>        
  
     
 </body>

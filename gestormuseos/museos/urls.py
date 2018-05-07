@@ -8,6 +8,6 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'gestormuseos.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'(?P<id>\d+)', views.museo_detalle)	#Variable P que va a ser id
+    url(r'(?P<id>\d+)', views.MuseoDetalle.as_view())	#Variable P que va a ser id
 
 ]
