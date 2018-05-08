@@ -2,8 +2,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from museos import urls as museosurls
 from museos import views
-from django.conf import settings    # Añadido de stackoverflow para conseguir que me cogiera el css
-from django.conf.urls.static import STATIC_URL  # Añadido de stackoverflow para conseguir que me cogiera el css
+from django.conf import settings    #Añadido de stackoverflow para conseguir que me cogiera el css
+from django.conf.urls.static import static  #Añadido de stackoverflow para conseguir que me cogiera el css
 
 
 urlpatterns = [
