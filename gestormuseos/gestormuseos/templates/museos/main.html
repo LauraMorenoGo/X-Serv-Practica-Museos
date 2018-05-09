@@ -1,7 +1,5 @@
 {% extends 'museos/base.html' %}	<!--Hereda de base.html-->
 
-
-
 {% block body %}
     <b>Museos registrados:</b><br>
 
@@ -14,8 +12,8 @@
     {% for configuracion in configuraciones %}
         <br><li><a href='/usuario/{{configuracion.id}}'> {{configuracion.usuario}} </li></a>
     {% endfor %}
-{% endblock %}
 
+{% endblock %}
 
 {% block head %}
     <h1>Página museos de Madrid</h1>      

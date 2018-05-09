@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
 from .models import Museo, Configuracion, Comentario
+from django.contrib.auth.models import User
+
 
 
 class Barra(View):  #View es una clase de la que heredo
@@ -24,7 +26,7 @@ class Usuario(View):
     def get(self, request, id):
 
         context = {}
-
+        logged = ""
         usuarios = Configuracion.objects.exclude(id=id)
 
         try:
@@ -37,7 +39,7 @@ class Usuario(View):
         context['usuario'] = usuario
         context['usuarios'] = usuarios
         context['favoritos'] = favoritos
-
+        
         return render(request, 'museos/usu.html', context)
     
 
@@ -57,4 +59,13 @@ class MuseoDetalle(View):
 
 
     
+class Autenticacion(View):
 
+    def show_content(request, resource):
+
+        if request.user.is_authenticated():
+            logged = "Logged in as " + request.user.username + '<br><a href="/admin/logout/">Logout</a><br><a href="/admin/">Añadir o modificar páginas</a><br>'
+        else:
+            logged = "Not logged in.<br><a href='/admin/login/'>Login</a><br>"
+
+        return render(request, 'registration/login.html', logged)

@@ -29,13 +29,26 @@
         </nav><!-- / nav -->
  
     </header><!-- / #main-header -->
- 
+
+    <ul class="sidebar-nav">
+
+       {% if user.is_authenticated %}
+            <li>Usuario: {{ user.get_username }}</li>   <!--Sólo se ve si está autenticado--> 
+            <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>   
+       {% else %}
+            
+            <link href="registration/login.html" rel="import" />
+            <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+            
+       {% endif %} 
+    </ul> 
+
     
     <div id="main-content" class="main-body">
         <div class="head-body">
             
             {% block head %}
-                <h1>Página algo que no quiero acordarme</h1>
+                <h1>Página nueva</h1>
             {% endblock %}
         </div>
         <div class="body-body">
