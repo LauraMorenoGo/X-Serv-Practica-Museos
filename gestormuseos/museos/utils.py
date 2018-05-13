@@ -68,13 +68,16 @@ class CargarBaseDatos():
 
     def ejecutar(self):
         xml = self.buscar()
-        xml = None
+        
         if not xml:
+            print ("Uso buscar2")
             xml = self.buscar2()
+        else:
+            print ("Uso buscar")
 
         lista_museos = self.parser(xml)
 
-        # self.guardar(lista_museos)
+        self.guardar(lista_museos)
 
     def buscar(self):
         try:
@@ -99,36 +102,72 @@ class CargarBaseDatos():
         for contenido in contenidos:
             museo = {}
 
-            id_externo = contenido.find('atributo', {'id_externo': 'ID-ENTIDAD'}).text
-            nombre = contenido.find('atributo', {'nombre': 'NOMBRE'}).text
-            descripcion_entidad = contenido.find('atributo', {'descripcion_entidad': 'DESCRIPCION-ENTIDAD'}).text
-            horario = contenido.find('atributo', {'horario': 'HORARIO'}).text
-            equipamiento = contenido.find('atributo', {'equipamiento': 'EQUIPAMIENTO'}).text
-            transporte = contenido.find('atributo', {'transporte': 'TRANSPORTE'}).text
-            descripcion = contenido.find('atributo', {'descripcion': 'DESCRIPCION'}).text
-            accesibilidad = contenido.find('atributo', {'accesibilidad': 'ACCESIBILIDAD'}).text
-            content_url = contenido.find('atributo', {'content_url': 'CONTENT-URL'}).text
-            localizacion = contenido.find('atributo', {'localizacion': 'LOCALIZACION'}).text
+            id_externo = contenido.find('atributo', {'nombre': 'ID-ENTIDAD'})
+            nombre = contenido.find('atributo', {'nombre': 'NOMBRE'})
+            descripcion_entidad = contenido.find('atributo', {'nombre': 'DESCRIPCION-ENTIDAD'})
+            horario = contenido.find('atributo', {'nombre': 'HORARIO'})
+            equipamiento = contenido.find('atributo', {'nombre': 'EQUIPAMIENTO'})
+            transporte = contenido.find('atributo', {'nombre': 'TRANSPORTE'})
+            descripcion = contenido.find('atributo', {'nombre': 'DESCRIPCION'})
+            accesibilidad = contenido.find('atributo', {'nombre': 'ACCESIBILIDAD'})
+            content_url = contenido.find('atributo', {'nombre': 'CONTENT-URL'})
+            localizacion = contenido.find('atributo', {'nombre': 'LOCALIZACION'})
             if localizacion:
-                nombre_via = localizacion.find('atributo', {'nombre_via': 'NOMBRE-VIA'}).text
-                clase_via = localizacion.find('atributo', {'clase_via': 'CLASE-VIAL'}).text
-                numero_via = localizacion.find('atributo', {'numero_via': 'NUM'}).text
-                localidad = localizacion.find('atributo', {'localidad': 'LOCALIDAD'}).text
-                provincia = localizacion.find('atributo', {'provincia': 'PROVINCIA'}).text
-                codigo_postal = localizacion.find('atributo', {'codigo_postal': 'CODIGO-POSTAL'}).text
-                distrito = localizacion.find('atributo', {'distrito': 'DISTRITO'}).text
-                coordenada_x = localizacion.find('atributo', {'coordenada_x': 'COORDENADA-X'}).text
-                coordenada_y = localizacion.find('atributo', {'coordenada_y': 'COORDENADA-Y'}).text
-                latitud = localizacion.find('atributo', {'latitud': 'LATITUD'}).text
-                longitud = localizacion.find('atributo', {'longitud': 'LONGITUD'}).text
-            datos_contactos = contenido.find('atributo', {'datos_contactos': 'DATOSCONTACTOS'}).text
+                nombre_via = localizacion.find('atributo', {'nombre': 'NOMBRE-VIA'})
+                clase_via = localizacion.find('atributo', {'nombre': 'CLASE-VIAL'})
+                numero_via = localizacion.find('atributo', {'nombre': 'NUM'})
+                localidad = localizacion.find('atributo', {'nombre': 'LOCALIDAD'})
+                provincia = localizacion.find('atributo', {'nombre': 'PROVINCIA'})
+                codigo_postal = localizacion.find('atributo', {'nombre': 'CODIGO-POSTAL'})
+                distrito = localizacion.find('atributo', {'nombre': 'DISTRITO'})
+                coordenada_x = localizacion.find('atributo', {'nombre': 'COORDENADA-X'})
+                coordenada_y = localizacion.find('atributo', {'nombre': 'COORDENADA-Y'})
+                latitud = localizacion.find('atributo', {'nombre': 'LATITUD'})
+                longitud = localizacion.find('atributo', {'nombre': 'LONGITUD'})
+            datos_contactos = contenido.find('atributo', {'nombre': 'DATOSCONTACTOS'})
             if datos_contactos:
-                telefono = datos_contactos.find('atributo', {'telefono': 'TELEFONO'}).text
-                email = datos_contactos.find('atributo', {'email': 'EMAIL'}).text
+                telefono = datos_contactos.find('atributo', {'nombre': 'TELEFONO'})
+                email = datos_contactos.find('atributo', {'nombre': 'EMAIL'})
 
-            tipo = contenido.find('atributo', {'tipo': 'TIPO'}).text
+            tipo = contenido.find('atributo', {'nombre': 'TIPO'})
+
+            museo['id_externo'] = id_externo.text
+            museo['nombre'] = nombre.text
+            if descripcion_entidad:
+                museo['descripcion_entidad'] = descripcion_entidad.text
+            if horario:
+                museo['horario'] = horario.text
+            if equipamiento:
+                museo['equipamiento'] = equipamiento.text
+            if transporte:
+                museo['transporte'] = transporte.text
+            if descripcion:
+                museo['descripcion'] = descripcion.text
+            museo['accesibilidad'] = accesibilidad.text
+            museo['content_url'] = content_url.text
+            museo['localizacion'] = localizacion.text
+            museo['nombre_via'] = nombre_via.text
+            museo['clase_via'] = clase_via.text
+            if numero_via:
+                museo['numero_via'] = numero_via.text
+            museo['localidad'] = localidad.text
+            museo['provincia'] = provincia.text
+            museo['codigo_postal'] = codigo_postal.text
+            museo['distrito'] = distrito.text
+            museo['coordenada_x'] = coordenada_x.text
+            museo['coordenada_y'] = coordenada_y.text
+            museo['latitud'] = latitud.text
+            museo['longitud'] = longitud.text
+            if telefono:
+                museo['telefono'] = telefono.text
+            if email:
+                museo['email'] = email.text
+            museo['tipo'] = tipo.text
+
 
             lista_museos.append(museo)
+
+        #raise Exception(lista_museos)
         return lista_museos
         """
         nombre = soup.find_all("atributo", "NOMBRE")
@@ -189,4 +228,4 @@ class CargarBaseDatos():
 
             m.save()
 
-        return m
+        #return m

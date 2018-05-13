@@ -44,12 +44,16 @@ class Usuario(View):
         context['usuario'] = usuario
         context['usuarios'] = usuarios
         context['favoritos'] = favoritos
+        form_nombre = CambiarNombrePaginaUsuario()
+        context['form_nombre'] = form_nombre
+        form_estilo = CambiarEstilo()
+        context['form_estilo'] = form_estilo
 
         usuario_log = request.user.id
         context['usuario_ppal'] = str(usuario_log) == str(id_user)
         
         return render(request, 'museos/usu.html', context)
-    
+
 
 class MuseoDetalle(View):
 
@@ -97,5 +101,15 @@ class LlamadaCargaBaseDatos(View):
         cargar_datos = CargarBaseDatos()    #creamos la instancia a partir del objeto
         cargar_datos.ejecutar()
         
-        return HttpResponse()
+        return HttpResponseRedirect('/')
 
+class Museos(View):
+
+    def get(self, request):
+        context = {}
+
+        museos = Museo.objects.all()
+
+        context['museos'] = museos
+
+        return render(request, 'museos/lista_mus.html', context)

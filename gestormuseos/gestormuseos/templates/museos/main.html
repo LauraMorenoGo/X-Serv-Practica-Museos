@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    <b>Museos registrados:</b><br>
+    <b>Museos con más comentarios:</b><br>
 
     {% for museo in museos %}
         <br><li><a href='/museos/{{museo.id}}'>{{museo.nombre}}</li></a>

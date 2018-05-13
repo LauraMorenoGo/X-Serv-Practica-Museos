@@ -1,0 +1,17 @@
+{% extends 'museos/base.html' %}	<!--Hereda de base.html-->
+
+{% block head %}
+
+    <h1><b><u>Museos de Madrid</u></b></h1>
+    
+{% endblock %}
+
+{% block body %}
+
+    {% for museo in museos %}
+        <br><li><a href='/museos/{{museo.id}}'>{{museo.nombre}}</li></a>
+
+    {% endfor %}
+
+
+{% endblock %}

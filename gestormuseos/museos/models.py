@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Museo(models.Model):
-    id_externo = models.CharField(max_length=150, null=True) #No me deja ponerlo sin null
+    id_externo = models.CharField(max_length=150) #No me deja ponerlo sin null
     nombre = models.CharField(max_length=150)
     descripcion_entidad = models.TextField(null=True)   #Ya que hay museos con este campo vacío
     horario = models.TextField(null=True, blank=True)
@@ -36,7 +36,9 @@ class Museo(models.Model):
 class Configuracion(models.Model):
     favoritos = models.ManyToManyField(Museo, related_name='configuraciones')
     usuario = models.OneToOneField(User, related_name='config', null=False)
-
+    nombre_pag = models.CharField(max_length=150, null=True, blank=True)
+    letra = models.IntegerField(null=True)
+    fondo = models.CharField(max_length=150, null=True, blank=True)
     def __str__(self):
         return str(self.usuario)
 

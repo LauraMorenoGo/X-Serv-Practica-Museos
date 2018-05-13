@@ -1,12 +1,26 @@
 {% extends 'museos/base.html' %}    <!--Hereda de base.html-->
 
-{% block head %}
+{% if user.is_authenticated %}
+    {% block head %}
 
-    <h1><b><u>Página de {{usuario.usuario}}</u></b></h1>
+        <h1><b><u>{{variable_form}}</u></b></h1>
 
-{% endblock %}
+    {% endblock %}
+{% endif %}
 
 {% block body %}
+    
+    <form method="post" action="/setnombre">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Enviar" />
+    </form>
+    
+    <form method="post" action="/setstyle">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Enviar" />
+    </form>
 
     Los museos favoritos de {{usuario.usuario}} son:<br>
 
