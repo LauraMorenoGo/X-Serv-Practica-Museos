@@ -13,7 +13,7 @@ class ComentarioForm(forms.ModelForm):  #Sacado de stackoverflow
         comentario = self.cleaned_data.get('comentario')
 
         if 'kk' in comentario:
-            raise forms.ValidationError("Habla bien leches")
+            raise forms.ValidationError("No está permitido poner eso")
 
         return comentario
 
