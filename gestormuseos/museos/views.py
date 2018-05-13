@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.views.generic import View
 from .models import Museo, Configuracion, Comentario
 from django.contrib.auth.models import User
+from museos.forms import ComentarioForm
+from django.http import HttpResponseRedirect
+from museos.utils import CargarBaseDatos
 
 
 
@@ -23,14 +26,16 @@ class Barra(View):  #View es una clase de la que heredo
 
 class Usuario(View):
 
-    def get(self, request, id):
-
+    def get(self, request, *args, **kwargs):    # *args: para tomar una cantidad indefinida de argumentos, devuelve lista
+                                                # *kwargs: diccionario que contiene cada uno de los argumentos y su valor
+        
         context = {}
         logged = ""
-        usuarios = Configuracion.objects.exclude(id=id)
+        id_user = kwargs.get('id')
+        usuarios = Configuracion.objects.exclude(id=id_user)
 
         try:
-            usuario = Configuracion.objects.get(id=id)
+            usuario = Configuracion.objects.get(id=id_user)
         except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
             usuario = None
 
@@ -39,33 +44,58 @@ class Usuario(View):
         context['usuario'] = usuario
         context['usuarios'] = usuarios
         context['favoritos'] = favoritos
+
+        usuario_log = request.user.id
+        context['usuario_ppal'] = str(usuario_log) == str(id_user)
         
         return render(request, 'museos/usu.html', context)
     
 
 class MuseoDetalle(View):
 
-    def get(self, request, id):
+    def get(self, request, **kwargs):
 
         context = {}
 
-        museo = Museo.objects.filter(id=id).first()
-
+        museo = Museo.objects.filter(id=kwargs.get('id')).first()   #Devuelve el valor con la clave 'id' y sino devuelve True
+                                                                    #first() se queda con el primero y si no hay, nulo
+        if not museo:   #necesito hacer un response redirect en django, me redirige a la pág ppal si no es válido
+            return HttpResponseRedirect('/')
         context['museo'] = museo
         context['comentarios'] = museo.comentarios.all()
+        form = ComentarioForm()
+        context['form'] = form
 
         
         return render(request, 'museos/mus.html', context)
 
+    def post(self, request, **kwargs):
+        
+        configuracion = request.user.config
+        museo = Museo.objects.filter(id=kwargs.get('id')).first()
+        if not museo:   #necesito hacer un response redirect en django
+            return HttpResponseRedirect('/')
 
-    
-class Autenticacion(View):
+        form = ComentarioForm(request.POST)
 
-    def show_content(request, resource):
+        if form.is_valid():
+            form.save(museo, configuracion)
+            return HttpResponseRedirect('/museos/%s' % kwargs.get('id'))
 
-        if request.user.is_authenticated():
-            logged = "Logged in as " + request.user.username + '<br><a href="/admin/logout/">Logout</a><br><a href="/admin/">Añadir o modificar páginas</a><br>'
-        else:
-            logged = "Not logged in.<br><a href='/admin/login/'>Login</a><br>"
+        context = {
+            'museo': museo,
+            'comentarios': museo.comentarios.all(),
+            'form': form
+        }
+        return render(request, 'museos/mus.html', context)
 
-        return render(request, 'registration/login.html', logged)
+
+class LlamadaCargaBaseDatos(View):
+
+    def get(self, request, *args, **kwargs):   
+        
+        cargar_datos = CargarBaseDatos()    #creamos la instancia a partir del objeto
+        cargar_datos.ejecutar()
+        
+        return HttpResponse()
+

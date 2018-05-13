@@ -11,16 +11,16 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'gestormuseos.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    url(r'^$', views.Barra.as_view()),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^museos/', include(museosurls)),
-    url(r'^usuario$', views.Usuario.as_view()),
     url(r'^usuario/(?P<id>\d+)', views.Usuario.as_view()),
     url(r'^logout', logout),
     url(r'^login', login),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    url(r'^accounts/profile/(?P<id>\d+)', views.Usuario.as_view()),
-    url(r'^$', views.Barra.as_view())
+    url(r'^charge', views.LlamadaCargaBaseDatos.as_view()),
+    
+    
 
 
 ]

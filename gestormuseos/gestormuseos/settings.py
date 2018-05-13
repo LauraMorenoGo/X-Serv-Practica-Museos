@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGIN_REDIRECT_URL = "/" #donde quiero mandarlo reverse_lazy('dashboard')
 # Application definition
 
 INSTALLED_APPS = (

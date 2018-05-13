@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Museo(models.Model):
+    id_externo = models.CharField(max_length=150, null=True) #No me deja ponerlo sin null
     nombre = models.CharField(max_length=150)
     descripcion_entidad = models.TextField(null=True)   #Ya que hay museos con este campo vacío
     horario = models.TextField(null=True, blank=True)

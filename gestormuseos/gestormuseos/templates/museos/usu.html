@@ -1,5 +1,11 @@
 {% extends 'museos/base.html' %}    <!--Hereda de base.html-->
 
+{% block head %}
+
+    <h1><b><u>Página de {{usuario.usuario}}</u></b></h1>
+
+{% endblock %}
+
 {% block body %}
 
     Los museos favoritos de {{usuario.usuario}} son:<br>
@@ -11,9 +17,11 @@
 
     <br><b><a href='/'>Volver a la página principal</a><br>
     {% if user.is_authenticated %}
-        <a href="/admin/">Añadir o modificar mis páginas de museos</a><br>
-        <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+        {% if usuario_ppal %}
+            <a href="/admin/">Añadir o modificar mis páginas de museos</a><br>
+        {% endif %}
     {% else %}
+
         <br>Usted no está identificado, si quiere modificar su configuración, inicie sesión<br>
     {% endif %}
 {% endblock %}

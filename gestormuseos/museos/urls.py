@@ -9,5 +9,5 @@ urlpatterns = [
     # url(r'^$', 'gestormuseos.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'(?P<id>\d+)', views.MuseoDetalle.as_view())	#Variable P que va a ser id
-
+    
 ]

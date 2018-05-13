@@ -13,34 +13,42 @@
 <body>
     
     <header id="main-header">
-        
-        <a id="logo-header" href="#">
-            <span class="site-name">MUSEOS DE MADRID</span>
-            <span class="site-desc"> Museos / Museos Favoritos </span>
-        </a> <!-- / #logo-header -->
- 
+        <div style="display: inline-block"> <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Oso_y_Madro%C3%B1o_%28Antonio_Navarro%29_Madrid_05.jpg" width="50px" height="60px" margin=0px>
+        <span style="display: inline-block" class="site-name">MUSEOS DE LA CIUDAD DE MADRID</span>
+
         <nav>
             <ul>
                 <li class="menu"><a href="/">Página principal</a></li>
                 <li class="menu"><a href="/museos">Museos</a></li>
                 <li class="menu"><a href='/usuario'>Museos favoritos de usuarios registrados</a></li>
                 <li class="menu"><a href='/admin'>Página de configuración</a></li>
+                <li class="menu">
+                    {% if user.is_authenticated %}
+                        <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
+                        <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
+                    {% else %}
+                        <div class="formulario">
+                            <form method="post" action="/login">
+                                {% csrf_token %}
+
+                                <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
+                                <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
+
+                                <input type="submit" value="Login" />
+                            </form>
+                        </div>
+                        <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
+                        
+                    {% endif %}                                                                                                                                                                   
+                </li>
             </ul>
         </nav><!-- / nav -->
  
     </header><!-- / #main-header -->
 
-    <ul class="sidebar-nav">
+    <<ul class="sidebar-nav">   <!--BARRA LATERAL IZQDA -->
 
-       {% if user.is_authenticated %}
-            <li>Usuario: {{ user.get_username }}</li>   <!--Sólo se ve si está autenticado--> 
-            <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>   
-       {% else %}
-            
-            <link href="registration/login.html" rel="import" />
-            <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-            
-       {% endif %} 
+       
     </ul> 
 
     
@@ -48,7 +56,7 @@
         <div class="head-body">
             
             {% block head %}
-                <h1>Página nueva</h1>
+                <h1>Página de {{usuario.usuario}}</h1>
             {% endblock %}
         </div>
         <div class="body-body">
