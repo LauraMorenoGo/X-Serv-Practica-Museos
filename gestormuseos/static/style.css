@@ -8,7 +8,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: Helvetica, Arial, sans-serif;
-	color: #666;
+	color: #f2f2f2;
 	background: #f2f2f2; 
 	font-size: 1em;
 	line-height: 1.5em;
@@ -27,49 +27,52 @@ p {
 }
  
 img {
-	max-width: 100%;
+	width: 100%;
 	height: auto;
 }
 
-
-#main-header {
+/*
+"""#main-header {
 	background: #333;
 	color: white;
 	height: 150px;
 }	
-	#main-header a {
-		color: white;
-	}
- 
+#main-header a {
+	color: white;
+}
+
+
 /*
  * Logo
  */
+ /*
 #logo-header {
 	float: left;
 	padding: 15px 0 0 20px;
 	text-decoration: none;
 }
-	#logo-header:hover {
-		color: #0b76a6;
-	}
-	
-	#logo-header .site-name {
-		display: block;
-		font-weight: 700;
-		font-size: 1.2em;
-	}
-	
-	#logo-header .site-desc {
-		display: block;
-		font-weight: 300;
-		font-size: 0.8em;
-		color: #999;
-	}
+#logo-header:hover {
+	color: #0b76a6;
+}
+
+#logo-header .site-name {
+	display: block;
+	font-weight: 700;
+	font-size: 1.2em;
+}
+
+#logo-header .site-desc {
+	display: block;
+	font-weight: 300;
+	font-size: 0.8em;
+	color: #999;
+}
 	
  
 /*
  * Navegación
  */
+ /*
 nav {
 	float: right;
 }
@@ -105,10 +108,10 @@ nav ul li a:hover {
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 }
  
-	#main-content header,
-	#main-content .content {
-		padding: 40px;
-	}
+#main-content header,
+#main-content .content {
+	padding: 40px;
+}
 
 
 #main-footer {
@@ -118,12 +121,12 @@ nav ul li a:hover {
 	padding: 20px;
 	margin-top: 40px;
 }
-	#main-footer p {
-		margin: 0;
-	}
-	
-	#main-footer a {
-		color: white;
-	}
+#main-footer p {
+	margin: 0;
+}
+
+#main-footer a {
+	color: white;
+}*/
 
 

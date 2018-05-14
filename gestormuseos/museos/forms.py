@@ -2,7 +2,7 @@ from django import forms
 from museos.models import Comentario, Configuracion, Museo
 
 
-
+#FORMULARIO PARA AÑADIR COMENTARIOS
 class ComentarioForm(forms.ModelForm):  #Sacado de stackoverflow
     class Meta:
         model = Comentario
@@ -26,18 +26,20 @@ class ComentarioForm(forms.ModelForm):  #Sacado de stackoverflow
 
         instancia.save()
 
-class CambiarEstilo(forms.ModelForm):
+#FORMULARIO PARA CAMBIAR EL ESTILO CSS DE LA PÁG DE USUARIO
+class CambiarEstiloForm(forms.ModelForm):
     class Meta:
         model = Configuracion
         fields = ['fondo', 'letra']
 
-class CambiarNombrePaginaUsuario(forms.ModelForm):
+#FORMULARIO PARA CAMBIAR EL NOMBRE DE LA PÁG DE USUARIO
+class CambiarNombrePagForm(forms.ModelForm):
     class Meta:
         model = Configuracion
         fields = ['nombre_pag']
 
-
-class Distrito(forms.ModelForm):
+#FORMULARIO PARA FILTRAR LOS MUSEOS POR DISTRITO
+class DistritoForm(forms.ModelForm):
     class Meta:
         model = Museo
         fields = ['distrito']

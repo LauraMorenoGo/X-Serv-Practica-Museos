@@ -10,17 +10,7 @@
 
 {% block body %}
     
-    <form method="post" action="/setnombre">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Enviar" />
-    </form>
     
-    <form method="post" action="/setstyle">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Enviar" />
-    </form>
 
     Los museos favoritos de {{usuario.usuario}} son:<br>
 
@@ -29,13 +19,34 @@
     {% endfor %}
     
 
-    <br><b><a href='/'>Volver a la página principal</a><br>
+    <br><b><a href='/'>INICIO</a><br>
+
     {% if user.is_authenticated %}
         {% if usuario_ppal %}
+            <!--ENLACE PARA CAMBIAR LA CONFIGURACIÓN DESDE ADMIN-->
             <a href="/admin/">Añadir o modificar mis páginas de museos</a><br>
+
+            <!--FORMULARIO PARA CAMBIAR NOMBRE PÁG USUARIO-->
+            <form method="post" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Enviar" />
+            </form>
+            
+            <!--FORMULARIO PARA CAMBIAR ESTILO CSS PÁG USUARIO-->
+            <form method="post" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Enviar" />
+            </form>
+
         {% endif %}
+
+        
+
     {% else %}
 
         <br>Usted no está identificado, si quiere modificar su configuración, inicie sesión<br>
+
     {% endif %}
 {% endblock %}

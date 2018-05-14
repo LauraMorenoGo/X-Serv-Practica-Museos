@@ -3,12 +3,12 @@ from django.http import HttpResponse
 from django.views.generic import View
 from .models import Museo, Configuracion, Comentario
 from django.contrib.auth.models import User
-from museos.forms import ComentarioForm
+from museos.forms import ComentarioForm, CambiarEstiloForm, CambiarNombrePagForm, DistritoForm
 from django.http import HttpResponseRedirect
 from museos.utils import CargarBaseDatos
 
 
-
+#PÁG PRINCIPAL
 class Barra(View):  #View es una clase de la que heredo
 
     def get(self, request):
@@ -23,7 +23,7 @@ class Barra(View):  #View es una clase de la que heredo
         return render(request, 'museos/main.html', context)
 
 
-
+#PÁG DE LOS MUSEOS DE UN USUARIO
 class Usuario(View):
 
     def get(self, request, *args, **kwargs):    # *args: para tomar una cantidad indefinida de argumentos, devuelve lista
@@ -44,9 +44,9 @@ class Usuario(View):
         context['usuario'] = usuario
         context['usuarios'] = usuarios
         context['favoritos'] = favoritos
-        form_nombre = CambiarNombrePaginaUsuario()
+        form_nombre = CambiarNombrePagForm()
         context['form_nombre'] = form_nombre
-        form_estilo = CambiarEstilo()
+        form_estilo = CambiarEstiloForm()
         context['form_estilo'] = form_estilo
 
         usuario_log = request.user.id
@@ -54,7 +54,21 @@ class Usuario(View):
         
         return render(request, 'museos/usu.html', context)
 
+    def post(self, request, **kwargs):
+        
+        configuracion = request.user.config
 
+        form_nombre = CambiarNombrePagForm(request.POST)
+
+        form_estilo = CambiarEstiloForm(request.POST)
+
+        context = {
+            'form_nombre': form_nombre,
+            'form_estilo': form_estilo
+        }
+        return render(request, 'museos/usu.html', context)
+
+#PÁGINA DE UN MUSEO EN CONCRETO
 class MuseoDetalle(View):
 
     def get(self, request, **kwargs):
@@ -93,7 +107,7 @@ class MuseoDetalle(View):
         }
         return render(request, 'museos/mus.html', context)
 
-
+#CARGO LA BASE DE DATOS
 class LlamadaCargaBaseDatos(View):
 
     def get(self, request, *args, **kwargs):   
@@ -103,13 +117,30 @@ class LlamadaCargaBaseDatos(View):
         
         return HttpResponseRedirect('/')
 
+#PÁG CON EL LISTADO DE TODOS LOS MUSEOS
 class Museos(View):
 
     def get(self, request):
         context = {}
 
         museos = Museo.objects.all()
-
+        form_distrito = DistritoForm()
+        
         context['museos'] = museos
+        context['form_distrito'] = form_distrito
 
         return render(request, 'museos/lista_mus.html', context)
+
+    def post(self, request, **kwargs):
+        
+        museo = Museo.objects.all()
+
+        form_distrito = DistritoForm(request.POST)
+
+        context = {
+            'form_distrito': form_distrito
+        }
+
+        museo.filtrar(distrito)
+
+        return render(request, 'museos/mus.html', context)

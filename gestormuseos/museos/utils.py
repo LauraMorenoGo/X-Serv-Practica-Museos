@@ -81,6 +81,7 @@ class CargarBaseDatos():
 
     def buscar(self):
         try:
+            #CARGO EL FICHERO XML DESDE LA URL
             cadena = requests.get('https://datos.madrid.es/portal/site/egob/menuitem.ac61933d6ee3c31cae77ae7784f1a5a0/?vgnextoid=00149033f2201410VgnVCM100000171f5a0aRCRD&format=xml&file=0&filename=201132-0-museos&mgmtid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&preview=full')
             
             return cadena.content
@@ -101,6 +102,8 @@ class CargarBaseDatos():
 
         for contenido in contenidos:
             museo = {}
+
+            #BUSCO LOS DATOS QUE NOS INTERESAN
 
             id_externo = contenido.find('atributo', {'nombre': 'ID-ENTIDAD'})
             nombre = contenido.find('atributo', {'nombre': 'NOMBRE'})
@@ -131,9 +134,11 @@ class CargarBaseDatos():
 
             tipo = contenido.find('atributo', {'nombre': 'TIPO'})
 
+            #RELLENO EL DICCIONARIO
+
             museo['id_externo'] = id_externo.text
             museo['nombre'] = nombre.text
-            if descripcion_entidad:
+            if descripcion_entidad: #Hago esto para que los que puedan ser nulos no nos de fallo
                 museo['descripcion_entidad'] = descripcion_entidad.text
             if horario:
                 museo['horario'] = horario.text
@@ -169,30 +174,6 @@ class CargarBaseDatos():
 
         #raise Exception(lista_museos)
         return lista_museos
-        """
-        nombre = soup.find_all("atributo", "NOMBRE")
-        descripcion_entidad = soup.find_all("atributo", "DESCRIPCION-ENTIDAD")
-        horario = soup.find_all("atributo", "HORARIO")
-        #equipamiento = 
-        transporte = soup.find_all("atributo", "TRANSPORTE")
-        #descripcion = 
-        accesibilidad = soup.find_all("atributo", "ACCESIBILIDAD")
-        content_url = soup.find_all("atributo", "CONTENT-URL")
-        nombre_via = soup.find_all("atributo", "LOCALIZACION", "NOMBRE-VIA")
-        clase_via = soup.find_all("atributo", "LOCALIZACION", "CLASE-VIAL")
-        numero_via = soup.find_all("atributo", "LOCALIZACION", "NUM")
-        localidad = soup.find_all("atributo", "LOCALIZACION", "LOCALIDAD")
-        provincia = soup.find_all("atributo", "LOCALIZACION", "PROVINCIA")
-        codigo_postal = soup.find_all("atributo", "LOCALIZACION", "CODIGO-POSTAL")
-        distrito = soup.find_all("atributo", "LOCALIZACION", "DISTRITO")
-        coordenada_x = soup.find_all("atributo", "LOCALIZACION", "COORDENADA-Y")
-        coordenada_y = soup.find_all("atributo", "LOCALIZACION", "COORDENADA-Y")
-        latitud = soup.find_all("atributo", "LOCALIZACION", "LATITUD")
-        longitud = soup.find_all("atributo", "LOCALIZACION", "LONGITUD")
-        telefono = soup.find_all("atributo", "DATOSCONTACTOS", "TELEFONO")
-        email = soup.find_all("atributo", "DATOSCONTACTOS", "EMAIL")
-        tipo = soup.find_all("atributo", "TIPO")
-        """
 
     def guardar(self, lista_museos):
         
@@ -201,6 +182,7 @@ class CargarBaseDatos():
             if not m:
                 m = Museo()
 
+            #GUARDO CADA CAMPO CON SU CONTENIDO EN LA BASE DE DATOS
             m.id_externo = museo.get('id_externo')
             m.nombre = museo.get('nombre')
             m.descripcion_entidad = museo.get('descripcion_entidad')
