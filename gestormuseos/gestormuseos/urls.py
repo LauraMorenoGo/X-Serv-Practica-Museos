@@ -19,7 +19,8 @@ urlpatterns = [
     url(r'^login', login),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^charge', views.LlamadaCargaBaseDatos.as_view()),
-    
+    url(r'^about', views.About.as_view()),
+    url(r'^usuario/(?P<id>\d+)/xml', views.UsuarioXml.as_view()),
     
 
 

@@ -1,42 +1,71 @@
 {% extends 'museos/base.html' %}    <!--Hereda de base.html-->
 
-{% if user.is_authenticated %}
-    {% block head %}
+{% block head %}
+    {% if user.is_authenticated %}
+        {% if nombre_pag %}
+             <h1><b><u>{{configuracion.nombre_pag}}</u></b></h1>   <!--Lo coge del formulario de cambiar nombre-->
+        {% else %}
+            <h1>Los museos favoritos de {{usuario.usuario}} son:</h1><br>
+        {% endif %}
 
-        <h1><b><u>{{variable_form}}</u></b></h1>
+    {% else %}    
+        <h1>Los museos favoritos de {{usuario.usuario}} son:</h1><br>
+    {% endif %}
 
-    {% endblock %}
-{% endif %}
+{% endblock %}
+
+{% block opciones %}
+
+    <li id="inicio" class="menu"><a href="/">INICIO</a></li>
+    <li id="about" class="menu"><a href="/about">ABOUT</a></li>
+    <li id="museos" class="menu"><a href="/museos">TODOS</a></li>
+    <li id="admin" class="menu"><a href='/admin'>Página admin</a></li>
+    <li id="login" class="menu">
+        {% if user.is_authenticated %}
+            <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
+            <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
+        {% else %}
+            <div class="formulario">
+                <form method="post" action="/login">
+                    {% csrf_token %}
+
+                    <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
+                    <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
+
+                    <input type="submit" value="Login" />
+                </form>
+            </div>
+            <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
+            
+        {% endif %}                                                                                                                                                                   
+    </li>    
+    
+{% endblock %}
 
 {% block body %}
     
-    
-
-    Los museos favoritos de {{usuario.usuario}} son:<br>
 
     {% for favorito in favoritos %}
         <br><li><a href='/museos/{{favorito.id}}'> {{favorito.nombre}} </li></a>
     {% endfor %}
     
 
-    <br><b><a href='/'>INICIO</a><br>
-
     {% if user.is_authenticated %}
         {% if usuario_ppal %}
-            <!--ENLACE PARA CAMBIAR LA CONFIGURACIÓN DESDE ADMIN-->
-            <a href="/admin/">Añadir o modificar mis páginas de museos</a><br>
 
             <!--FORMULARIO PARA CAMBIAR NOMBRE PÁG USUARIO-->
-            <form method="post" action="">
+            <b><li>FORMULARIO PARA CAMBIAR NOMBRE PÁG USUARIO</li></b>
+            <form method="post" action="url/cambia_nombre">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form_nombre.as_p}}
                 <input type="submit" value="Enviar" />
             </form>
             
             <!--FORMULARIO PARA CAMBIAR ESTILO CSS PÁG USUARIO-->
-            <form method="post" action="">
+            <b><li>FORMULARIO PARA CAMBIAR ESTILO CSS PÁG USUARIO</li></b>
+            <form method="post" action="url/cambia_estilo">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form_estilo.as_p}}
                 <input type="submit" value="Enviar" />
             </form>
 
@@ -49,4 +78,7 @@
         <br>Usted no está identificado, si quiere modificar su configuración, inicie sesión<br>
 
     {% endif %}
+
+
+    <li id="usuxml" class="menu"><a href="/usuario/{{usuario.id}}/xml">VERSIÓN XML</a></li>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block head %}
 
-    <h1><b><u>Museos de Madrid</u></b></h1>
+    <h1><b><u>Autoría de la práctica y funcionalidad.</u></b></h1>
     
 {% endblock %}
 
@@ -36,13 +36,11 @@
 
 {% block body %}
 
-    {% for museo in museos %}
-        <br><li><a href='/museos/{{museo.id}}'>{{museo.nombre}}</li></a>
+	<b><li>Autor práctica:</b> Laura Moreno Gómez</li><br>
+	<b><li>Doble grado:</b> Sist. Telecomunicación + ADE</li><br>
+	<b><li>Usuario labs:</b> morenol</li><br>
+	<b><li>Usuario Github:</b> lauramorenogo</li><br><br>
 
-    {% endfor %}
-
-    <br><b><a href='/'><input type="button" value="INICIO"></a><br>
-    <br><b><a href='/museos'><input type="button" value="TODOS"></a><br>
-    <br><b><a href='/about'><input type="button" value="ABOUT"></a><br><br>
+	<b><li>Funcionalidad:</b><br> </li><br>
 
 {% endblock %}

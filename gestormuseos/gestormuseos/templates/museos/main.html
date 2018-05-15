@@ -10,13 +10,19 @@
     <b>Museos con más comentarios:</b><br>
 
     {% for museo in museos %}
-        <br><li><a href='/museos/{{museo.id}}'>{{museo.nombre}}</li></a>
+        <br><li><a href='{{museo.content_url}}'>{{museo.nombre}}</a><br>
+        {{museo.clase_via}} {{museo.nombre_via}} 
+        {% if museo.numero_via %} {{museo.numero_via}} {% else %} S/N {% endif %}<br>
+
+        <a href='/museos/{{museo.id}}'>Más info</li></a>
     {% endfor %}
 
-    <br><b>Museos favoritos de gente registrada:</b><br>
+{% endblock %}
 
+{% block barra %}
+	
+	<br><b>USUARIOS REGISTRADOS:</b><br>
     {% for configuracion in configuraciones %}
-        <br><li><a href='/usuario/{{configuracion.id}}'> {{configuracion.usuario}} </li></a>
+        <br><li><a href='/usuario/{{configuracion.id}}'> {% if configuracion.nombre_pag %} {{configuracion.nombre_pag}} {% else %} Página de {{configuracion.usuario}} {% endif %}</a>:  {{configuracion.usuario}}
     {% endfor %}
-
 {% endblock %}

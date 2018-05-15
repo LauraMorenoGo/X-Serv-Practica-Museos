@@ -10,19 +10,26 @@
     <link rel="stylesheet"  type="text/css"  href="{% static 'style.css' %}" >
 </head>
  
-<body>
+<body style="
+    background: {% if color_fondo %} {{color_fondo}} {% else %} #f2f2f2 {% endif%};
+    font-size: {% if letra %} {{letra}}em {% else %} 1em {% endif%};">
     
     <header id="main-header">
-        <div style="display: inline-block"> <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Oso_y_Madro%C3%B1o_%28Antonio_Navarro%29_Madrid_05.jpg" width="90px" height="140px" margin=0px>
-        <span style="display: inline-block" class="site-name">MUSEOS DE LA CIUDAD DE MADRID</span>
+        <div id="banner-titulo" style="display: inline-block"> 
+            <img id="imagen" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Oso_y_Madro%C3%B1o_%28Antonio_Navarro%29_Madrid_05.jpg" width="90px" height="140px" margin=0px></img>
 
-        <nav>
+            <span id="titulo" style="display: inline-block" class="site-name">MUSEOS DE LA CIUDAD DE MADRID</span>
+
+
+        </div>
+        <nav id="login-barramenu">
             <ul>
-                <li class="menu"><a href="/">Página principal</a></li>
-                <li class="menu"><a href="/museos">Museos</a></li>
-                <li class="menu"><a href='/usuario'>Museos favoritos de usuarios registrados</a></li>
-                <li class="menu"><a href='/admin'>Página de configuración</a></li>
-                <li class="menu">
+                {% block opciones %}
+
+                <li id="about" class="menu"><a href="/about">ABOUT</a></li>
+                <li id="museos" class="menu"><a href="/museos">TODOS</a></li>
+                <li id="admin" class="menu"><a href='/admin'>Página admin</a></li>
+                <li id="login" class="menu">
                     {% if user.is_authenticated %}
                         <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
                         <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
@@ -41,30 +48,40 @@
                         
                     {% endif %}                                                                                                                                                                   
                 </li>
+
+                {% endblock %}
             </ul>
         </nav><!-- / nav -->
  
     </header><!-- / #main-header -->
 
-    <<ul class="sidebar-nav">   <!--BARRA LATERAL IZQDA -->
-
+    <ul id="barra-lateral" class="sidebar-nav">   <!--BARRA LATERAL IZQDA -->
+        {% block barra %}
+                
+        {% endblock %}
        
     </ul> 
 
     
     <div id="main-content" class="main-body">
-        <div class="head-body">
+        <div id="head-body" class="head-body">
             
             {% block head %}
-                <h1>Página de {{usuario.usuario}}</h1>
+                <h1></h1>
             {% endblock %}
         </div>
-        <div class="body-body">
+        <div id="body-body" class="body-body">
             {% block body %}
                 
             {% endblock %}
         </div>
-    </div>        
+    </div>  
+
+    <div id="pie-pag" class="footer">
+      <p>Esta aplicación utiliza datos del portal de datos abiertos de la ciudad de Madrid<br>
+      <a href="https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default"><font color="blue">Museos de Madrid</font></a>
+    </p>
+    </div>      
  
     
 </body>

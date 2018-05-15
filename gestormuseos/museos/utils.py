@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-    
+from .models import Museo
+from django.conf import settings
+
 XML = """
 <Contenidos>
 <infoDataset>
@@ -73,6 +75,7 @@ class CargarBaseDatos():
             print ("Uso buscar2")
             xml = self.buscar2()
         else:
+            
             print ("Uso buscar")
 
         lista_museos = self.parser(xml)
@@ -80,14 +83,18 @@ class CargarBaseDatos():
         self.guardar(lista_museos)
 
     def buscar(self):
+        
         try:
             #CARGO EL FICHERO XML DESDE LA URL
-            cadena = requests.get('https://datos.madrid.es/portal/site/egob/menuitem.ac61933d6ee3c31cae77ae7784f1a5a0/?vgnextoid=00149033f2201410VgnVCM100000171f5a0aRCRD&format=xml&file=0&filename=201132-0-museos&mgmtid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&preview=full')
+            file_xml = open('%s/201132-0-museos.xml' % settings.MEDIA_ROOT, 'r')
+            xml = file_xml.read()
+            file_xml.close()
+            return xml
             
-            return cadena.content
         except Exception as e:
             print (e)
             return None
+        
 
     def buscar2(self):
         return XML
@@ -99,7 +106,6 @@ class CargarBaseDatos():
         soup = BeautifulSoup(xml, "lxml")
         
         contenidos = soup.find_all('contenido')
-
         for contenido in contenidos:
             museo = {}
 
@@ -161,8 +167,10 @@ class CargarBaseDatos():
             museo['distrito'] = distrito.text
             museo['coordenada_x'] = coordenada_x.text
             museo['coordenada_y'] = coordenada_y.text
-            museo['latitud'] = latitud.text
-            museo['longitud'] = longitud.text
+            if latitud:
+                museo['latitud'] = latitud.text
+            if longitud:
+                museo['longitud'] = longitud.text
             if telefono:
                 museo['telefono'] = telefono.text
             if email:
@@ -172,7 +180,6 @@ class CargarBaseDatos():
 
             lista_museos.append(museo)
 
-        #raise Exception(lista_museos)
         return lista_museos
 
     def guardar(self, lista_museos):
@@ -209,5 +216,3 @@ class CargarBaseDatos():
             m.tipo = museo.get('tipo')
 
             m.save()
-
-        #return m

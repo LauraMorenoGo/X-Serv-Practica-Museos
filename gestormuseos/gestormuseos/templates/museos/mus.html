@@ -6,35 +6,85 @@
 
 {% endblock %}
 
+{% block opciones %}
+
+    <li id="inicio" class="menu"><a href="/">INICIO</a></li>
+    <li id="about" class="menu"><a href="/about">ABOUT</a></li>
+    <li id="museos" class="menu"><a href="/museos">TODOS</a></li>
+    <li id="admin" class="menu"><a href='/admin'>Página admin</a></li>
+    <li id="login" class="menu">
+        {% if user.is_authenticated %}
+            <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
+            <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
+        {% else %}
+            <div class="formulario">
+                <form method="post" action="/login">
+                    {% csrf_token %}
+
+                    <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
+                    <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
+
+                    <input type="submit" value="Login" />
+                </form>
+            </div>
+            <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
+            
+        {% endif %}                                                                                                                                                                   
+    </li>    
+    
+{% endblock %}
+
 {% block body %}
 
-    <b>Descripción del museo:</b><br>
+    <b><li>Descripción del museo:</li></b>
+    {% if museo.descripcion_entidad %}{{museo.descripcion_entidad}} {% else %} No hay descripción para este museo. {% endif %}<br><br>
 
-    <br><li>{{museo.descripcion_entidad}} </li><br>
+    <b><li>Horario del museo:</li></b>
+    {% if museo.horario %}{{museo.horario}} {% else %} No hay horario disponible. {% endif %}<br><br>
 
-    <b>Horario del museo:</b><br>
+    <b><li>Transporte:</li></b>
+    {% if museo.transporte %}{{museo.transporte}} {% else %} No hay transporte público. {% endif %}<br><br>
 
-    <br><li>{{museo.horario}} </li><br>
+    <b><li>Dirección:</li></b>{{museo.clase_via}} {{museo.nombre_via}} 
+    {% if museo.numero_via %}{{museo.numero_via}} {% else %} S/N {% endif %}<br><br>
 
-    <b>Transporte:</b><br>
+    <b><li>Barrio:</li></b>{{museo.barrio}} <br><br>
 
-    <br><li>{{museo.transporte}} </li><br>
+    <b><li>Distrito:</li></b>{{museo.distrito}}<br><br>
 
-    <b>Dirección:</b><br>
+    <b><li>Accesibilidad:</li></b>{{museo.accesibilidad}}<br><br>
 
-    <br><li>{{museo.clase_via}} {{museo.nombre_via}} {{museo.numero_via}} </li><br>
-    
-    <b>Los comentarios de los usuarios registrados son los siguientes:</b><br>
+    <b><li>Datos de contacto:</li></b>
+    {% if museo.telefono %}Tlf: {{museo.telefono}} {% else %} No hay teléfono para este museo {% endif %}<br>
+    {% if museo.email %}Email: {{museo.email}} {% else %} No hay email para este museo {% endif %}<br><br>
+
+    <b><li>Los comentarios de los usuarios registrados son los siguientes:</li></b>
 
     {% for comentario in comentarios %}
-            <br><li>{{comentario.comentario}} </li><br>
+            -{{comentario.comentario}} </li><br>
     {% endfor %}
-    <form method="post" action="">
+
+    {% if user.is_authenticated %}
+        <form method="post" action="">
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit" value="Enviar" />
-    </form>
+        </form>
 
-    <br><b><a href='/'>INICIO</a><br><br><a href='/admin'>Ir a la página de configuración</a></b><br><br>
+        <!--{% if museo.favoritos %}
+            <a class="btn btn-danger" href="/museos/{{museo.id}}/removefavorito">Quitar favorito</a>
+        {% else %}
+            <a class="btn btn-success" href="/museos/{{museo.id}}/addfavorito">Añadir a favoritos</a>
+        {% endif%}-->
+
+    {% else %}
+
+        <br>Usted no está identificado, si quiere escribir un comentario, inicie sesión<br>
+
+    {% endif %}
+    
+
+
+
 
 {% endblock %}

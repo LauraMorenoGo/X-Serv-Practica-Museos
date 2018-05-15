@@ -54,19 +54,32 @@ class Usuario(View):
         
         return render(request, 'museos/usu.html', context)
 
+class CambiaNombre(View):
+
     def post(self, request, **kwargs):
         
         configuracion = request.user.config
 
         form_nombre = CambiarNombrePagForm(request.POST)
 
+        context = {
+            'form_nombre': form_nombre
+        }
+        return HttpResponseRedirect('/usuario/%s' % kwargs.get('id'))
+
+
+class CambiaEstilo(View):
+
+     def post(self, request, **kwargs):
+        
+        configuracion = request.user.config
+
         form_estilo = CambiarEstiloForm(request.POST)
 
         context = {
-            'form_nombre': form_nombre,
             'form_estilo': form_estilo
         }
-        return render(request, 'museos/usu.html', context)
+        return HttpResponseRedirect('/usuario/%s' % kwargs.get('id'))
 
 #PÁGINA DE UN MUSEO EN CONCRETO
 class MuseoDetalle(View):
@@ -144,3 +157,33 @@ class Museos(View):
         museo.filtrar(distrito)
 
         return render(request, 'museos/mus.html', context)
+
+class About(View):
+
+    def get(self, request):
+        context = {}
+
+        context['about'] = 'active'
+        context['user'] = request.user
+
+        return render(request, 'museos/about.html', context)
+
+class UsuarioXml(View):
+
+    def get(self, request):
+        context = {}
+
+        usuarios = Configuracion.objects.exclude(id=id_user)
+
+        try:
+            usuario = Configuracion.objects.get(id=id_user)
+        except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
+            usuario = None
+
+        #usuario = request.user
+        favoritos = usuario.favoritos.all() 
+
+        context['favoritos'] = favoritos
+
+        return render(request, 'museos/usu_xml.html', context)
+        
