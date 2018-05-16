@@ -1,9 +1,11 @@
+import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
-from .models import Museo, Configuracion, Comentario
+from .models import Museo, Configuracion, Comentario, Favorito
 from django.contrib.auth.models import User
-from museos.forms import ComentarioForm, CambiarEstiloForm, CambiarNombrePagForm, DistritoForm
+from museos.forms import ComentarioForm, CambiarEstiloForm, CambiarNombrePagForm
 from django.http import HttpResponseRedirect
 from museos.utils import CargarBaseDatos
 
@@ -14,8 +16,15 @@ class Barra(View):  #View es una clase de la que heredo
     def get(self, request):
         context = {}
 
-        museos = Museo.objects.all()
+
+        check_acc = request.GET.get('acc')
+        if not check_acc:
+            museos = Museo.objects.all()
+        else:
+            museos = Museo.objects.filter(accesibilidad=1)
+
         configuraciones = Configuracion.objects.all()
+    
 
         context['museos'] = museos
         context['configuraciones'] = configuraciones
@@ -88,12 +97,13 @@ class MuseoDetalle(View):
     def get(self, request, **kwargs):
 
         context = {}
-        user = request.user #<-- sacamos la configuracion
+        user = request.user #sacamos la configuracion
         museo = Museo.objects.filter(id=kwargs.get('id')).first()   #Devuelve el valor con la clave 'id' y sino devuelve True
                                                                     #first() se queda con el primero y si no hay, nulo
         if not museo:   #necesito hacer un response redirect en django, me redirige a la pág ppal si no es válido
             return HttpResponseRedirect('/')
-        context['is_fav'] = museo.configuraciones.filter().count()#<-- id ¿  id de config
+
+        context['is_fav'] = museo.favoritos.filter(configuracion=user.config).count()#<-- id ¿  id de config
         context['museo'] = museo
         context['comentarios'] = museo.comentarios.all()
         form = ComentarioForm()
@@ -132,33 +142,36 @@ class LlamadaCargaBaseDatos(View):
         
         return HttpResponseRedirect('/')
 
-
+#AÑADIR A FAVORITOS
 class Add(View):
 
     def get(self, request, *args, **kwargs):   
         
         user = request.user
+        if user:
 
-        # Recuperamos la configuracion
-        # Recuperamos el museo
+            museo = Museo.objects.filter(id=kwargs.get('id')).first()
+            if museo:
 
-        # guardamos en favoritos
-        # Favorito(museo=museo, config=config).save()
-        
-        return HttpResponseRedirect('') # vuelvo al detalle del museo
-
+                if not Favorito.objects.filter(museo=museo, configuracion=user.config):
+                    Favorito(museo=museo, configuracion=user.config, fecha=datetime.datetime.today()).save()
+                
+        return HttpResponseRedirect('/museos/%s' % kwargs.get('id')) # vuelvo al detalle del museo
+#QUITAR DE FAVORITOS
 class Remove(View):
 
     def get(self, request, *args, **kwargs):   
         
         user = request.user
+        if user:
 
-        # favorito = Favorito.objects.filter(museo=museo, config=config)
-        # favorito.delete() o .remove()
+            museo = Museo.objects.filter(id=kwargs.get('id')).first()
+            if museo:
 
-       
+                favorito = Favorito.objects.filter(museo=museo, configuracion=user.config, fecha=datetime.datetime.today())
+                favorito.delete()
         
-        return HttpResponseRedirect('') # vuelvo al detalle del museo
+        return HttpResponseRedirect('/museos/%s' % kwargs.get('id')) # vuelvo al detalle del museo
 
 #PÁG CON EL LISTADO DE TODOS LOS MUSEOS
 class Museos(View):
@@ -171,26 +184,27 @@ class Museos(View):
             museos = Museo.objects.all()
         else:
             museos = Museo.objects.filter(accesibilidad=1)
-        form_distrito = DistritoForm()
         
         context['museos'] = museos
-        context['form_distrito'] = form_distrito
 
         return render(request, 'museos/lista_mus.html', context)
 
-    def post(self, request, **kwargs):
-        
-        museo = Museo.objects.all()
+    def post(self, request, **kwargs):  #FILTRA LOS MUSEOS POR DISTRITO
+        context = {}
 
-        form_distrito = DistritoForm(request.POST)
+        check_acc = request.GET.get('acc')
+        if not check_acc:
+            museos = Museo.objects.all()
+        else:
+            museos = Museo.objects.filter(accesibilidad=1)
+        distrito_selected = request.POST.get('distrito')
+        if distrito_selected:
 
-        context = {
-            'form_distrito': form_distrito
-        }
+            museos_final = museos.filter(distrito=distrito_selected.upper())
 
-        museo.filter(distrito)
+        context['museos'] = museos_final
 
-        return render(request, 'museos/mus.html', context)
+        return render(request, 'museos/lista_mus.html', context)
 
 #ABOUT
 class About(View):
@@ -207,19 +221,25 @@ class About(View):
 class UsuarioXml(View):
 
     def get(self, request):
+
         context = {}
+        user = request.user
 
-        usuarios = Configuracion.objects.exclude(id=id_user)
+        museos = user.usuario.museos.all()
+        context['museos'] = museos
+        #context = {}
 
-        try:
-            usuario = Configuracion.objects.get(id=id_user)
-        except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
-            usuario = None
+        #usuarios = Configuracion.objects.exclude(id=id_user)
 
-        #usuario = request.user
-        favoritos = usuario.favoritos.all() 
+        #try:
+            #usuario = Configuracion.objects.get(id=id_user)
+        #except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
+            #usuario = None
 
-        context['favoritos'] = favoritos
+        ##usuario = request.user
+        #favoritos = usuario.favoritos.all() 
+
+        #context['favoritos'] = favoritos
 
         return render(request, 'museos/usu_xml.html', context)
         

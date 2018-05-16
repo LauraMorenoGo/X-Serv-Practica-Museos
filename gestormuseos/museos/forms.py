@@ -38,12 +38,5 @@ class CambiarNombrePagForm(forms.ModelForm):
         model = Configuracion
         fields = ['nombre_pag']
 
-#FORMULARIO PARA FILTRAR LOS MUSEOS POR DISTRITO
-class DistritoForm(forms.ModelForm):
-    class Meta:
-        model = Museo
-        fields = ['distrito']
 
-    def filtrar(self, distrito):
-        museo = Museo.objects.filter(distrito='distrito')
 

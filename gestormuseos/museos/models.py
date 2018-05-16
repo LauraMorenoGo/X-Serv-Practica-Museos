@@ -38,7 +38,7 @@ class Favorito(models.Model):
     configuracion = models.ForeignKey('Configuracion', related_name='favoritos', null=False, blank=False)
     fecha = models.DateField()
     def __str__(self):
-        return "%s %s %s" % (self.museo, configuracion.usuario, fecha )
+        return "%s %s %s" % (self.museo, self.configuracion.usuario, self.fecha )
 
     # def save(): # Hacer que cada ver que se modifique, se guarde la fecha actual. datetime.today()
 

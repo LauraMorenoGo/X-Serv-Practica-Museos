@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block barradcha%}
-
+    <a>FORMULARIO DISTRITO</a>
     <li id="distrito" class="menu">
         
         <div class="formulario">
@@ -47,8 +47,6 @@
                       <option value="fuencarral-el-pardo">FUENCARRAL-EL PARDO</option>
                       <option value="arganzuela">ARGANZUELA</option>
                 </select>
-                <!--{% csrf_token %}
-                {{form_distrito.as_p}}-->
             <input type="submit" value="Enviar" />
             </form>
             </form>
@@ -56,22 +54,6 @@
             
                                                                                                                                                                    
     </li>
-
-    <select name="distrito" id="distrito">
-          <option value="centro">CENTRO</option>
-          <option value="barajas">BARAJAS</option>
-          <option value="retiro">RETIRO</option>
-          <option value="moncloa-aravaca">MONCLOA-ARAVACA</option>
-          <option value="ciudad-lineal">CIUDAD LINEAL</option>
-          <option value="salamanca">SALAMANCA</option>
-          <option value="chamartin">CHAMARTIN</option>
-          <option value="chamberi">CHAMBERI</option>
-          <option value="tetuan">TETUAN</option>
-          <option value="latina">LATINA</option>
-          <option value="puente-de-vallecas">PUENTE DE VALLECAS</option>
-          <option value="fuencarral-el-pardo">FUENCARRAL-EL PARDO</option>
-          <option value="arganzuela">ARGANZUELA</option>
-    </select>
 
     <a class="button" href="/museos/?acc=True">Accesibles</a>/
     <a class="button" href="/museos">Vista normal</a>

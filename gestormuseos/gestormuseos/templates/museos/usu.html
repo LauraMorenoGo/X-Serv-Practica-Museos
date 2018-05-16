@@ -45,7 +45,7 @@
 
             <!--FORMULARIO PARA CAMBIAR NOMBRE PÁG USUARIO-->
             <b><li>FORMULARIO PARA CAMBIAR NOMBRE PÁG USUARIO</li></b>
-            <form method="post" action="url/cambia_nombre">
+            <form method="post" action="/usuario/{{usuario.id}}/cambia_nombre">
                 {% csrf_token %}
                 {{form_nombre.as_p}}
                 <input type="submit" value="Enviar" />
@@ -53,7 +53,7 @@
             
             <!--FORMULARIO PARA CAMBIAR ESTILO CSS PÁG USUARIO-->
             <b><li>FORMULARIO PARA CAMBIAR ESTILO CSS PÁG USUARIO</li></b>
-            <form method="post" action="url/cambia_estilo">
+            <form method="post" action="/usuario/{{usuario.id}}/cambia_estilo">
                 {% csrf_token %}
                 {{form_estilo.as_p}}
                 <input type="submit" value="Enviar" />
@@ -64,7 +64,7 @@
 
     <a class="button" href="/usuario/{{usuario.id}}/?acc=True">Vista solo acc</a>
     <a class="button" href="/usuario/{{usuario.id}}/">Vista normal</a>
-    
+
 {% endblock %}
 
 {% block body %}

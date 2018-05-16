@@ -9,7 +9,7 @@ urlpatterns = [
     # url(r'^$', 'gestormuseos.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^$', views.Museos.as_view()),
-    url(r'(?P<id>\d+)', views.MuseoDetalle.as_view()),	#Variable P que va a ser id
-    url(r'(?P<id>\d+)/addfavorito', views.Add.as_view()),
-    url(r'(?P<id>\d+)/removefavorito', views.Remove.as_view())
+    url(r'(?P<id>\d+)$', views.MuseoDetalle.as_view()),	#Variable P que va a ser id
+    url(r'(?P<id>\d+)/addfavorito$', views.Add.as_view()),
+    url(r'(?P<id>\d+)/removefavorito$', views.Remove.as_view())
 ]

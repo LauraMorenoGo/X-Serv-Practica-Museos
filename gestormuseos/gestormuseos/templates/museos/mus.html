@@ -26,7 +26,15 @@
 
 {% block barradcha %}
 
-    <input type="button" value="AÑADIR A FAVORITOS">
+    {% if user.is_authenticated %}
+        
+        {% if is_fav %}
+            <a class="btn btcn-danger" href="/museos/{{museo.id}}/removefavorito">Quitar favorito</a>
+        {% else %}
+            <a class="btn btn-success" href="/museos/{{museo.id}}/addfavorito">Añadir a favoritos</a>
+        {% endif%}
+
+    {% endif %}
 
 {% endblock %}
 
@@ -67,12 +75,6 @@
         <input type="submit" value="Enviar" />
         </form>
 
-        
-        {% if is_fav %}
-            <a class="btn btn-danger" href="/museos/{{museo.id}}/removefavorito">Quitar favorito</a>
-        {% else %}
-            <a class="btn btn-success" href="/museos/{{museo.id}}/addfavorito">Añadir a favoritos</a>
-        {% endif%}
 
     {% else %}
 

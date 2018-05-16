@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^museos/', include(museosurls)),
     url(r'^usuario/(?P<id>\d+)', views.Usuario.as_view()),
     url(r'^usuario/(?P<id>\d+)/xml', views.UsuarioXml.as_view()),
+    url(r'^usuario/(?P<id>\d+)/cambia_nombre', views.CambiaNombre.as_view()),
+    url(r'^usuario/(?P<id>\d+)/cambia_estilo', views.CambiaEstilo.as_view()),
     url(r'^logout', logout),
     url(r'^login', login),
     url(r'^accounts/', include('django.contrib.auth.urls')),
