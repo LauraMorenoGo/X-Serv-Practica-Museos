@@ -26,10 +26,11 @@ p {
 }
  
 img {
-	width: 100%;
+	width: 50px;
 	height: auto;
 }
 
+/*CABECERA*/
 #main-header {
 	background: #333;
 	color: white;
@@ -39,6 +40,12 @@ img {
 	color: white;
 }
 
+#barra-dcha {
+    float: right;
+    width: 200px;
+    background: #EBEBEB;
+    padding: 15px 10px;
+}
 
 /*
  * Logo
@@ -104,26 +111,28 @@ nav ul li a:hover {
 	max-width: 800px;
 	margin: 20px auto;
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
+
 }
  
 #main-content header,
 #main-content .content {
 	padding: 40px;
+	min-height: 400px;
 }
 
-
-#main-footer {
+/*PIE DE PÁGINA*/
+#pie-pag {
 	background: #333;
 	color: white;
 	text-align: center;
 	padding: 20px;
 	margin-top: 40px;
 }
-#main-footer p {
+#pie-pag p {
 	margin: 0;
 }
 
-#main-footer a {
+#pie-pag a {
 	color: white;
 }
 

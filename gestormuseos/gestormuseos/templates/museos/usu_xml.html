@@ -1,40 +1,4 @@
-{% extends 'museos/base.html' %}	<!--Hereda de base.html-->
 
-{% block head %}
-
-    <h1><b><u>Autoría de la práctica y funcionalidad.</u></b></h1>
-    
-{% endblock %}
-
-{% block opciones %}
-
-    <li id="inicio" class="menu"><a href="/">INICIO</a></li>
-    <li id="about" class="menu"><a href="/about">ABOUT</a></li>
-    <li id="museos" class="menu"><a href="/museos">TODOS</a></li>
-    <li id="admin" class="menu"><a href='/admin'>Página admin</a></li>
-    <li id="login" class="menu">
-        {% if user.is_authenticated %}
-            <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
-            <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
-        {% else %}
-            <div class="formulario">
-                <form method="post" action="/login">
-                    {% csrf_token %}
-
-                    <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
-                    <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
-
-                    <input type="submit" value="Login" />
-                </form>
-            </div>
-            <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
-            
-        {% endif %}                                                                                                                                                                   
-    </li>    
-    
-{% endblock %}
-
-{% block body %}
     <?xml version="1.0" encoding="UTF-8"?>
 	<Contenidos>
     <infoDataset>
@@ -77,4 +41,3 @@
     </contenido>
     </Contenidos>
 
-{% endblock %}

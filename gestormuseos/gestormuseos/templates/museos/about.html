@@ -17,19 +17,9 @@
             <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
             <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
         {% else %}
-            <div class="formulario">
-                <form method="post" action="/login">
-                    {% csrf_token %}
-
-                    <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
-                    <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
-
-                    <input type="submit" value="Login" />
-                </form>
-            </div>
             <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
             
-        {% endif %}                                                                                                                                                                   
+        {% endif %}                                                                                                                                                                    
     </li>    
     
 {% endblock %}

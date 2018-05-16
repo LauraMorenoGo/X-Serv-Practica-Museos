@@ -34,16 +34,6 @@
                         <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
                         <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
                     {% else %}
-                        <div class="formulario">
-                            <form method="post" action="/login">
-                                {% csrf_token %}
-
-                                <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
-                                <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
-
-                                <input type="submit" value="Login" />
-                            </form>
-                        </div>
                         <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
                         
                     {% endif %}                                                                                                                                                                   
@@ -62,7 +52,13 @@
        
     </ul> 
 
-    
+    <ul id="barra-dcha" class="sidebar">   <!--BARRA LATERAL DCHA -->
+        {% block barradcha %}
+                
+        {% endblock %}
+       
+    </ul> 
+
     <div id="main-content" class="main-body">
         <div id="head-body" class="head-body">
             
@@ -79,7 +75,7 @@
 
     <div id="pie-pag" class="footer">
       <p>Esta aplicación utiliza datos del portal de datos abiertos de la ciudad de Madrid<br>
-      <a href="https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default"><font color="blue">Museos de Madrid</font></a>
+      <a href="https://datos.madrid.es/portal/site/egob/menuitem.c05c1f754a33a9fbe4b2e4b284f1a5a0/?vgnextoid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD&vgnextfmt=default"><font color="pink">Museos de Madrid</font></a>
     </p>
     </div>      
  

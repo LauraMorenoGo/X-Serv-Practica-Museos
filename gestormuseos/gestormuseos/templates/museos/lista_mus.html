@@ -17,21 +17,65 @@
             <div>Usuario: {{ user.get_username }}</div>   <!--Sólo se ve si está autenticado--> 
             <div><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></div>   
         {% else %}
-            <div class="formulario">
-                <form method="post" action="/login">
-                    {% csrf_token %}
-
-                    <div class="elemento-login"> {{form.username.label}} {{form.username}} </div>
-                    <div class="elemento-login"> {{form.password.label}} {{form.password}} </div>
-
-                    <input type="submit" value="Login" />
-                </form>
-            </div>
             <div><a href="{% url 'login'%}?next={{request.path}}">Login</a></div>
             
-        {% endif %}                                                                                                                                                                   
+        {% endif %}     
+                                                                                                                                                                        
     </li>    
     
+{% endblock %}
+
+{% block barradcha%}
+
+    <li id="distrito" class="menu">
+        
+        <div class="formulario">
+            <form method="post" action="">
+                {% csrf_token %}
+                <select name="distrito" id="distrito">
+                      <option value="centro">CENTRO</option>
+                      <option value="barajas">BARAJAS</option>
+                      <option value="retiro">RETIRO</option>
+                      <option value="moncloa-aravaca">MONCLOA-ARAVACA</option>
+                      <option value="ciudad-lineal">CIUDAD LINEAL</option>
+                      <option value="salamanca">SALAMANCA</option>
+                      <option value="chamartin">CHAMARTIN</option>
+                      <option value="chamberi">CHAMBERI</option>
+                      <option value="tetuan">TETUAN</option>
+                      <option value="latina">LATINA</option>
+                      <option value="puente-de-vallecas">PUENTE DE VALLECAS</option>
+                      <option value="fuencarral-el-pardo">FUENCARRAL-EL PARDO</option>
+                      <option value="arganzuela">ARGANZUELA</option>
+                </select>
+                <!--{% csrf_token %}
+                {{form_distrito.as_p}}-->
+            <input type="submit" value="Enviar" />
+            </form>
+            </form>
+        </div>
+            
+                                                                                                                                                                   
+    </li>
+
+    <select name="distrito" id="distrito">
+          <option value="centro">CENTRO</option>
+          <option value="barajas">BARAJAS</option>
+          <option value="retiro">RETIRO</option>
+          <option value="moncloa-aravaca">MONCLOA-ARAVACA</option>
+          <option value="ciudad-lineal">CIUDAD LINEAL</option>
+          <option value="salamanca">SALAMANCA</option>
+          <option value="chamartin">CHAMARTIN</option>
+          <option value="chamberi">CHAMBERI</option>
+          <option value="tetuan">TETUAN</option>
+          <option value="latina">LATINA</option>
+          <option value="puente-de-vallecas">PUENTE DE VALLECAS</option>
+          <option value="fuencarral-el-pardo">FUENCARRAL-EL PARDO</option>
+          <option value="arganzuela">ARGANZUELA</option>
+    </select>
+
+    <a class="button" href="/museos/?acc=True">Accesibles</a>/
+    <a class="button" href="/museos">Vista normal</a>
+
 {% endblock %}
 
 {% block body %}
@@ -40,9 +84,5 @@
         <br><li><a href='/museos/{{museo.id}}'>{{museo.nombre}}</li></a>
 
     {% endfor %}
-
-    <br><b><a href='/'><input type="button" value="INICIO"></a><br>
-    <br><b><a href='/museos'><input type="button" value="TODOS"></a><br>
-    <br><b><a href='/about'><input type="button" value="ABOUT"></a><br><br>
 
 {% endblock %}

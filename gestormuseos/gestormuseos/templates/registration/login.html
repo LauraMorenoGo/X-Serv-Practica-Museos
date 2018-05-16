@@ -1,15 +1,15 @@
-{% extends 'museos/base.html' %}	<!--Hereda de base.html-->
+{% extends 'museos/base.html' %}    <!--Hereda de base.html-->
 
 {% block body %}
-    <!--
-    <html><body>
+    
+   
     <form method="post" action="/login">
-    {% csrf_token %}
+        {% csrf_token %}
 
-    <div>{{ form.label.user }} {{ form.user }}</div>
-    <div>{{ form.label.psswd }} {{ form.psswd }}</div>
-    <input type="submit" value="Login" />
+        <div>{{ form.username.label }} {{ form.username }}</div>
+        <div>{{ form.password.label }} {{ form.password }}</div>
+        <input type="submit" value="Login" />
     </form>
-    </body></html>-->
+    
 
 {% endblock %}

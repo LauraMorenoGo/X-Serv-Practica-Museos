@@ -15,12 +15,13 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^museos/', include(museosurls)),
     url(r'^usuario/(?P<id>\d+)', views.Usuario.as_view()),
+    url(r'^usuario/(?P<id>\d+)/xml', views.UsuarioXml.as_view()),
     url(r'^logout', logout),
     url(r'^login', login),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^charge', views.LlamadaCargaBaseDatos.as_view()),
     url(r'^about', views.About.as_view()),
-    url(r'^usuario/(?P<id>\d+)/xml', views.UsuarioXml.as_view()),
+    url(r'^accesibles', views.Accesibles.as_view()),
     
 
 
