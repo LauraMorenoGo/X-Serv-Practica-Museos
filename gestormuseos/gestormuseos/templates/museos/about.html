@@ -11,6 +11,10 @@
     <li id="inicio" class="menu"><a href="/">INICIO</a></li>
     <li id="about" class="menu"><a href="/about">ABOUT</a></li>
     <li id="museos" class="menu"><a href="/museos">TODOS</a></li>
+    {% if user.is_authenticated %}
+        <li id="usuario" class="menu"><a href='/usuario/{{user.id}}'>Página de {{ user.get_username }}</a></li>
+
+    {% endif %}
     <li id="admin" class="menu"><a href='/admin'>Página admin</a></li>
     <li id="login" class="menu">
         {% if user.is_authenticated %}

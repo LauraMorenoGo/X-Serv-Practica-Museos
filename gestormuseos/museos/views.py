@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from museos.forms import ComentarioForm, CambiarEstiloForm, CambiarNombrePagForm
 from django.http import HttpResponseRedirect
 from museos.utils import CargarBaseDatos
+from django.core.exceptions import ObjectDoesNotExist
 
 
 #PÁG PRINCIPAL
@@ -45,11 +46,12 @@ class Usuario(View):
 
         try:
             usuario = Configuracion.objects.get(id=id_user)
-        except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
+        except ObjectDoesNotExist:   #Cuando el id no es un número correcto
             usuario = None
-
-        favoritos = usuario.favoritos.all()
-
+        raise Exception(usuario)
+        favoritos = Favorito.objects.all() 
+        #usuario.favoritos.all() esto iba antes en favoritos
+        #raise Exception(favoritos)
         context['usuario'] = usuario
         context['usuarios'] = usuarios
         context['favoritos'] = favoritos
@@ -220,26 +222,26 @@ class About(View):
 #USUARIO/XML
 class UsuarioXml(View):
 
-    def get(self, request):
+    def get(self, request, **kwargs):
 
-        context = {}
-        user = request.user
-
-        museos = user.usuario.museos.all()
-        context['museos'] = museos
         #context = {}
+        #user = request.user
 
-        #usuarios = Configuracion.objects.exclude(id=id_user)
+        #museos = user.usuario.museos.all()
+        #context['museos'] = museos
+        context = {}
 
-        #try:
-            #usuario = Configuracion.objects.get(id=id_user)
-        #except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
-            #usuario = None
+        usuarios = Configuracion.objects.exclude(id=kwargs.get('id'))
+
+        try:
+            usuario = Configuracion.objects.get(id=kwargs.get('id'))
+        except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
+            usuario = None
 
         ##usuario = request.user
-        #favoritos = usuario.favoritos.all() 
+        favoritos = Favorito.objects.filter(configuracion=usuario) 
 
-        #context['favoritos'] = favoritos
+        context['favoritos'] = favoritos
 
         return render(request, 'museos/usu_xml.html', context)
         

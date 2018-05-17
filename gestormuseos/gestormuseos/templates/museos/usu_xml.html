@@ -2,10 +2,10 @@
     <?xml version="1.0" encoding="UTF-8"?>
 	<Contenidos>
     <infoDataset>
-        <nombre>>Los museos favoritos de {{usuario.usuario}}</nombre>
+        <nombre>>Los museos favoritos de {{usuario.usuarios}}</nombre>
         
     </infoDataset>
-    {% for museo in museos %}
+    {% for museo in favoritos %}
     <contenido>
         <tipo>EntidadesYOrganismos</tipo>
             <atributos idioma="es">
@@ -39,5 +39,6 @@
             <atributo nombre="TIPO">{{museo.tipo}}</atributo>
         </atributos>
     </contenido>
+    {% endfor %}
     </Contenidos>
 

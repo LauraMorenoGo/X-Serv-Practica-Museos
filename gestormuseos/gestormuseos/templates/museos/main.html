@@ -9,13 +9,32 @@
 {% block body %}
     <b>Museos con más comentarios:</b><br>
 
-    {% for museo in museos %}
-        <br><li><a href='{{museo.content_url}}'>{{museo.nombre}}</a><br>
-        {{museo.clase_via}} {{museo.nombre_via}} 
-        {% if museo.numero_via %} {{museo.numero_via}} {% else %} S/N {% endif %}<br>
+    <div id="table_id" class="display">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre y enlace esmadrid</th>
+                        <th>Dirección</th>
+                        <th>Enlace página museo</th>
 
-        <a href='/museos/{{museo.id}}'>Más info</li></a>
-    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for museo in museos %}
+                        <tr>
+                            <td><a href="{{museo.content_url}}">{{museo.nombre}}</a></td>
+                            <td>    {{museo.clase_via}} {{museo.nombre_via}} 
+        {% if museo.numero_via %} {{museo.numero_via}} {% else %} S/N {% endif %}</td>
+                            <td><a href="/museos/{{museo.id}}">Más info</a></td>                    
+                        </tr>
+
+                    {% endfor %}
+                        
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}
 

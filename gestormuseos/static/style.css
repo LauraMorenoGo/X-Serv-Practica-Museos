@@ -136,4 +136,22 @@ nav ul li a:hover {
 	color: white;
 }
 
+/*TABLAS */
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
 
+tr:hover {background-color: #f5f5f5}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
+th{
+    background-color:#333;
+    color:white;
+}
