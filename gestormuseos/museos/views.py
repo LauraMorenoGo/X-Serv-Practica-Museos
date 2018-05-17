@@ -48,10 +48,8 @@ class Usuario(View):
             usuario = Configuracion.objects.get(id=id_user)
         except ObjectDoesNotExist:   #Cuando el id no es un número correcto
             usuario = None
-        raise Exception(usuario)
         favoritos = Favorito.objects.all() 
-        #usuario.favoritos.all() esto iba antes en favoritos
-        #raise Exception(favoritos)
+        
         context['usuario'] = usuario
         context['usuarios'] = usuarios
         context['favoritos'] = favoritos
@@ -239,9 +237,10 @@ class UsuarioXml(View):
             usuario = None
 
         ##usuario = request.user
-        favoritos = Favorito.objects.filter(configuracion=usuario) 
+        favoritos = Favorito.objects.all() 
 
         context['favoritos'] = favoritos
+        context['usuario'] = usuario
 
         return render(request, 'museos/usu_xml.html', context)
         

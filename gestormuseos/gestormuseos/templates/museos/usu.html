@@ -70,7 +70,7 @@ $(document).ready( function () {
         {% endif %}
     {% endif %}
 
-    <a class="button" href="/usuario/{{usuario.id}}/?acc=True">Vista solo acc</a>
+    <a class="button" href="/usuario/{{usuario.id}}/?acc=True">Accesibles</a>
     <a class="button" href="/usuario/{{usuario.id}}/">Vista normal</a>
 
 {% endblock %}
@@ -96,14 +96,14 @@ $(document).ready( function () {
                             </tr>
 
                             {% if forloop.counter == 5 and not fin %}
-                                <p class="siguientes"><a href="/usuario/{{favorito.configuracion.usuario.id_user}}">Siguiente página</a></p>
+                                <p class="siguientes"><a href="/usuario/{{favorito.configuracion.usuario.id}}">Siguiente página</a></p>
                             {% endif %}
 
                         {% endfor %}
                         
                     {% else %}
                         <tr>
-                            <td colspan=4>Este usuario no tiene aparcamientos favoritos</td>
+                            <td colspan=2>Este usuario no tiene museos favoritos</td>
                         </tr>
                     {% endif %}
                 </tbody>

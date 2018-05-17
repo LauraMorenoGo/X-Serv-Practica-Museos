@@ -2,41 +2,41 @@
     <?xml version="1.0" encoding="UTF-8"?>
 	<Contenidos>
     <infoDataset>
-        <nombre>>Los museos favoritos de {{usuario.usuarios}}</nombre>
+        <nombre>>Los museos favoritos de {{usuario.usuario}}</nombre>
         
     </infoDataset>
     {% for museo in favoritos %}
     <contenido>
         <tipo>EntidadesYOrganismos</tipo>
             <atributos idioma="es">
-            <atributo nombre="ID-ENTIDAD">{{museo.id_externo}}</atributo>
-            <atributo nombre="NOMBRE">{{museo.nombre}}</atributo>
-            {% if museo.descripcion_entidad %}<atributo nombre="DESCRIPCION-ENTIDAD">{{museo.descripcion_entidad}}</atributo>{% endif %}
-            {% if museo.horario %}<atributo nombre="HORARIO">{{museo.horario}}</atributo>{% endif %}
-            {% if museo.equipamiento %}<atributo nombre="EQUIPAMIENTO">{{museo.equipamiento}}</atributo>{% endif %}
-            {% if museo.transporte %}<atributo nombre="TRANSPORTE">{{museo.transporte}}</atributo>{% endif %}
-            {% if museo.descripcion %}<atributo nombre="DESCRIPCION">{{museo.descripcion}}</atributo>{% endif %}
-            <atributo nombre="ACCESIBILIDAD">{{museo.accesibilidad}}</atributo>
-            <atributo nombre="CONTENT-URL">{{museo.content_url}}</atributo>
+            <atributo nombre="ID-ENTIDAD">{{museo.museo.id_externo}}</atributo>
+            <atributo nombre="NOMBRE">{{museo.museo.nombre}}</atributo>
+            {% if museo.museo.descripcion_entidad %}<atributo nombre="DESCRIPCION-ENTIDAD">{{museo.museo.descripcion_entidad}}</atributo>{% endif %}
+            {% if museo.museo.horario %}<atributo nombre="HORARIO">{{museo.museo.horario}}</atributo>{% endif %}
+            {% if museo.museo.equipamiento %}<atributo nombre="EQUIPAMIENTO">{{museo.museo.equipamiento}}</atributo>{% endif %}
+            {% if museo.museo.transporte %}<atributo nombre="TRANSPORTE">{{museo.museo.transporte}}</atributo>{% endif %}
+            {% if museo.museo.descripcion %}<atributo nombre="DESCRIPCION">{{museo.museo.descripcion}}</atributo>{% endif %}
+            <atributo nombre="ACCESIBILIDAD">{{museo.museo.accesibilidad}}</atributo>
+            <atributo nombre="CONTENT-URL">{{museo.museo.content_url}}</atributo>
             <atributo nombre="LOCALIZACION">
-                <atributo nombre="NOMBRE-VIA">{{museo.nombre_via}}</atributo>
-                <atributo nombre="CLASE-VIAL">{{museo.clase_via}}</atributo>
-                {% if museo.numero_via %}<atributo nombre="NUM">{{museo.numero_via}}</atributo>{% endif %}
-                <atributo nombre="LOCALIDAD">{{museo.localidad}}</atributo>
-                <atributo nombre="PROVINCIA">{{museo.provincia}}</atributo>
-                <atributo nombre="CODIGO-POSTAL">{{museo.codigo_postal}}</atributo>
-                <atributo nombre="BARRIO">{{museo.barrio}}</atributo>
-                <atributo nombre="DISTRITO">{{museo.distrito}}</atributo>
-                <atributo nombre="COORDENADA-X">{{museo.coordenada_x}}</atributo>
-                <atributo nombre="COORDENADA-Y">{{museo.coordenada_y}}</atributo>
-                <atributo nombre="LATITUD">{{museo.latitud}}</atributo>
-                <atributo nombre="LONGITUD">{{museo.longitud}}</atributo>
+                <atributo nombre="NOMBRE-VIA">{{museo.museo.nombre_via}}</atributo>
+                <atributo nombre="CLASE-VIAL">{{museo.museo.clase_via}}</atributo>
+                {% if museo.museo.numero_via %}<atributo nombre="NUM">{{museo.museo.numero_via}}</atributo>{% endif %}
+                <atributo nombre="LOCALIDAD">{{museo.museo.localidad}}</atributo>
+                <atributo nombre="PROVINCIA">{{museo.museo.provincia}}</atributo>
+                <atributo nombre="CODIGO-POSTAL">{{museo.museo.codigo_postal}}</atributo>
+                <atributo nombre="BARRIO">{{museo.museo.barrio}}</atributo>
+                <atributo nombre="DISTRITO">{{museo.museo.distrito}}</atributo>
+                <atributo nombre="COORDENADA-X">{{museo.museo.coordenada_x}}</atributo>
+                <atributo nombre="COORDENADA-Y">{{museo.museo.coordenada_y}}</atributo>
+                <atributo nombre="LATITUD">{{museo.museo.latitud}}</atributo>
+                <atributo nombre="LONGITUD">{{museo.museo.longitud}}</atributo>
             </atributo>
             <atributo nombre="DATOSCONTACTOS">
-                {% if museo.telefono %}<atributo nombre="TELEFONO">{{museo.telefono}}</atributo>{% endif %}
-                {% if museo.email %}<atributo nombre="EMAIL">{{museo.email}}</atributo>{% endif %}
+                {% if museo.museo.telefono %}<atributo nombre="TELEFONO">{{museo.museo.telefono}}</atributo>{% endif %}
+                {% if museo.museo.email %}<atributo nombre="EMAIL">{{museo.museo.email}}</atributo>{% endif %}
             </atributo>
-            <atributo nombre="TIPO">{{museo.tipo}}</atributo>
+            <atributo nombre="TIPO">{{museo.museo.tipo}}</atributo>
         </atributos>
     </contenido>
     {% endfor %}

@@ -114,7 +114,7 @@ class CargarBaseDatos():
 
             id_externo = contenido.find('atributo', {'nombre': 'ID-ENTIDAD'})
             nombre = contenido.find('atributo', {'nombre': 'NOMBRE'})
-            descripcion_entidad = contenido.find('atributo', {'nombre': 'DESCRIPCION-ENTIDAD'})
+            descripcion_entidad = contenido.find('atributo', {'nombre': 'DESCRIPCION-ENTIDAD'}).find_all(text=lambda tag: isinstance(tag, bs4.CData)).string.strip()
             horario = contenido.find('atributo', {'nombre': 'HORARIO'})
             equipamiento = contenido.find('atributo', {'nombre': 'EQUIPAMIENTO'})
             transporte = contenido.find('atributo', {'nombre': 'TRANSPORTE'})
