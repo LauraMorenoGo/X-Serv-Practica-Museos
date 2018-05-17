@@ -9,7 +9,9 @@ from museos.forms import ComentarioForm, CambiarEstiloForm, CambiarNombrePagForm
 from django.http import HttpResponseRedirect
 from museos.utils import CargarBaseDatos
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count
 
+NUM_MUSEOS = 5
 
 #PÁG PRINCIPAL
 class Barra(View):  #View es una clase de la que heredo
@@ -20,15 +22,17 @@ class Barra(View):  #View es una clase de la que heredo
 
         check_acc = request.GET.get('acc')
         if not check_acc:
-            museos = Museo.objects.all()
+            museos = Museo.objects.all().annotate(num_comentarios=Count('comentarios')).order_by('-num_comentarios')[:NUM_MUSEOS]
+            
         else:
-            museos = Museo.objects.filter(accesibilidad=1)
-
+            museos = Museo.objects.filter(accesibilidad=1).annotate(num_comentarios=Count('comentarios')).order_by('-num_comentarios')[:NUM_MUSEOS]
+            
         configuraciones = Configuracion.objects.all()
     
 
         context['museos'] = museos
         context['configuraciones'] = configuraciones
+
 
         return render(request, 'museos/main.html', context)
 
@@ -74,6 +78,7 @@ class CambiaNombre(View):
 
         context = {
             'form_nombre': form_nombre
+            'configuracion': configuracion
         }
         return HttpResponseRedirect('/usuario/%s' % kwargs.get('id'))
 
@@ -88,6 +93,7 @@ class CambiaEstilo(View):
 
         context = {
             'form_estilo': form_estilo
+            'configuracion': configuracion
         }
         return HttpResponseRedirect('/usuario/%s' % kwargs.get('id'))
 
@@ -242,7 +248,7 @@ class UsuarioXml(View):
         context['favoritos'] = favoritos
         context['usuario'] = usuario
 
-        return render(request, 'museos/usu_xml.html', context)
+        return render(request, 'museos/usu_xml.html', context, content_type="text/xml")
         
 class Accesibles(View):
 

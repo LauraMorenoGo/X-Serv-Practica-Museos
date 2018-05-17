@@ -26,7 +26,8 @@
                             <td><a href="{{museo.content_url}}">{{museo.nombre}}</a></td>
                             <td>    {{museo.clase_via}} {{museo.nombre_via}} 
         {% if museo.numero_via %} {{museo.numero_via}} {% else %} S/N {% endif %}</td>
-                            <td><a href="/museos/{{museo.id}}">Más info</a></td>                    
+                            <td><a href="/museos/{{museo.id}}">Más info</a></td>
+                            <td>{{museo.num_comentarios}}</td>                   
                         </tr>
 
                     {% endfor %}
@@ -48,7 +49,7 @@
 
 {% block barradcha %}
     
-    <a class="button" href="/?acc=True">Accesibles</a>
+    <a class="button" href="/?acc=True">Accesibles/</a>
     <a class="button" href="/">Vista normal</a>
 
 {% endblock %}

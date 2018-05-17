@@ -1,14 +1,12 @@
 {% extends 'museos/base.html' %}    <!--Hereda de base.html-->
+{% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 
-$(document).ready( function () {
-    $('table_id').DataTable();
-} );
+
 
 {% block head %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
     {% if user.is_authenticated %}
         {% if nombre_pag %}
              <h1><b><u>{{configuracion.nombre_pag}}</u></b></h1>   <!--Lo coge del formulario de cambiar nombre-->
@@ -70,46 +68,39 @@ $(document).ready( function () {
         {% endif %}
     {% endif %}
 
-    <a class="button" href="/usuario/{{usuario.id}}/?acc=True">Accesibles</a>
+    <a class="button" href="/usuario/{{usuario.id}}/?acc=True">Accesibles/</a>
     <a class="button" href="/usuario/{{usuario.id}}/">Vista normal</a>
 
 {% endblock %}
 
 {% block body %}
     
-    <div id="table_id" class="display">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
+    
+    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-museos">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if favoritos %}
+                {% for favorito in favoritos %}
                     <tr>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-
+                        <td><a href="/museos/{{favorito.id}}">{{favorito.museo}}</a></td>
+                        <td>    {{favorito.fecha}}</td>                             
                     </tr>
-                </thead>
-                <tbody>
-                    {% if favoritos %}
-                        {% for favorito in favoritos|slice:":5" %}
-                            <tr>
-                                <td><a href="/museos/{{favorito.id}}">{{favorito.museo}}</a></td>
-                                <td>    {{favorito.fecha}}</td>                             
-                            </tr>
 
-                            {% if forloop.counter == 5 and not fin %}
-                                <p class="siguientes"><a href="/usuario/{{favorito.configuracion.usuario.id}}">Siguiente página</a></p>
-                            {% endif %}
-
-                        {% endfor %}
-                        
-                    {% else %}
-                        <tr>
-                            <td colspan=2>Este usuario no tiene museos favoritos</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+                {% endfor %}
+                
+            {% else %}
+                <tr>
+                    <td colspan=2>Este usuario no tiene museos favoritos</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
 
     {% if not user.is_authenticated %}
 
@@ -117,5 +108,22 @@ $(document).ready( function () {
 
     {% endif %}
 
+    <!-- jQuery -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <!-- DataTables JavaScript -->
+    <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+
+    
+<script>
+    $(document).ready(function() {
+        $('#dataTables-museos').DataTable({
+            "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]]
+        });
+    });
+</script>
 {% endblock %}
+
+
 

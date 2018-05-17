@@ -155,3 +155,8 @@ th{
     background-color:#333;
     color:white;
 }
+
+#body-body{
+	display: inline-block !important;
+
+}
