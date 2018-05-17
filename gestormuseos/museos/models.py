@@ -40,8 +40,6 @@ class Favorito(models.Model):
     def __str__(self):
         return "%s %s %s" % (self.museo, self.configuracion.usuario, self.fecha )
 
-    # def save(): # Hacer que cada ver que se modifique, se guarde la fecha actual. datetime.today()
-
 class Configuracion(models.Model):
     usuario = models.OneToOneField(User, related_name='config', null=False)
     nombre_pag = models.CharField(max_length=150, null=True, blank=True)

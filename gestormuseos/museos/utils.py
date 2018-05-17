@@ -178,8 +178,6 @@ class CargarBaseDatos():
                 museo['email'] = email.text
             museo['tipo'] = tipo.text
 
-            #if 'lope' in museo.get('nombre').lower():
-                #raise Exception(contenido.find('atributo', {'nombre': 'DESCRIPCION-ENTIDAD'}).find(text=lambda tag: isinstance(tag, bs4.CData)))
             lista_museos.append(museo)
 
         return lista_museos

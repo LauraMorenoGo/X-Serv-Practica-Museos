@@ -7,16 +7,12 @@
 {% block head %}
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-    {% if user.is_authenticated %}
-        {% if nombre_pag %}
-             <h1><b><u>{{configuracion.nombre_pag}}</u></b></h1>   <!--Lo coge del formulario de cambiar nombre-->
-        {% else %}
-            <h1><b><u>Los museos favoritos de {{usuario.usuario}} son:</u></b></h1><br>
-        {% endif %}
-
-    {% else %}    
+    {% if configuracion.nombre_pag %}
+         <h1><b><u>{{configuracion.nombre_pag}}</u></b></h1>   <!--Lo coge del formulario de cambiar nombre-->
+    {% else %}
         <h1><b><u>Los museos favoritos de {{usuario.usuario}} son:</u></b></h1><br>
     {% endif %}
+
 
 {% endblock %}
 
@@ -107,6 +103,8 @@
         <br>Usted no está identificado, si quiere modificar su configuración, inicie sesión<br>
 
     {% endif %}
+
+    <!--PAGINACIÓN DE 5 EN 5 DE MUSEOS EN EL USUARIO
 
     <!-- jQuery -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

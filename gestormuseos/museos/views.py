@@ -74,10 +74,13 @@ class CambiaNombre(View):
         
         configuracion = request.user.config
 
-        form_nombre = CambiarNombrePagForm(request.POST)
+        form_nombre = CambiarNombrePagForm(request.POST, instance=configuracion)
+
+        if form_nombre.is_valid():
+            form_nombre.save()
 
         context = {
-            'form_nombre': form_nombre
+            'form_nombre': form_nombre,
             'configuracion': configuracion
         }
         return HttpResponseRedirect('/usuario/%s' % kwargs.get('id'))
@@ -89,10 +92,13 @@ class CambiaEstilo(View):
         
         configuracion = request.user.config
 
-        form_estilo = CambiarEstiloForm(request.POST)
+        form_estilo = CambiarEstiloForm(request.POST, instance=configuracion)
+        
+        if form_estilo.is_valid():
+            form_estilo.save()
 
         context = {
-            'form_estilo': form_estilo
+            'form_estilo': form_estilo,
             'configuracion': configuracion
         }
         return HttpResponseRedirect('/usuario/%s' % kwargs.get('id'))
@@ -189,7 +195,7 @@ class Museos(View):
         if not check_acc:
             museos = Museo.objects.all()
         else:
-            museos = Museo.objects.filter(accesibilidad=1)
+            museos = Museo.objects.filter(accesibilidad=1)  #FILTRA LOS MUSEOS POR ACCESIBLES
         
         context['museos'] = museos
 
@@ -228,11 +234,6 @@ class UsuarioXml(View):
 
     def get(self, request, **kwargs):
 
-        #context = {}
-        #user = request.user
-
-        #museos = user.usuario.museos.all()
-        #context['museos'] = museos
         context = {}
 
         usuarios = Configuracion.objects.exclude(id=kwargs.get('id'))
@@ -242,7 +243,6 @@ class UsuarioXml(View):
         except ConfiguracionDoesNotExist:   #Cuando el id no es un número correcto
             usuario = None
 
-        ##usuario = request.user
         favoritos = Favorito.objects.all() 
 
         context['favoritos'] = favoritos

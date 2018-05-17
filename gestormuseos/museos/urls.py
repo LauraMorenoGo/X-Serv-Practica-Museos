@@ -1,6 +1,5 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from museos import urls as museosurls
 from museos import views
 
 
