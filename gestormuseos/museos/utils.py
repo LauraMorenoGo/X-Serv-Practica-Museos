@@ -103,8 +103,8 @@ class CargarBaseDatos():
     def parser(self, xml):
 
         lista_museos = []
-
-        soup = BeautifulSoup(xml, "lxml")
+        soup = BeautifulSoup( xml, "xml" ) #Solucionado el error, solución encontrada en Stackoverflow
+        
         
         contenidos = soup.find_all('contenido')
         for contenido in contenidos:
@@ -114,7 +114,7 @@ class CargarBaseDatos():
 
             id_externo = contenido.find('atributo', {'nombre': 'ID-ENTIDAD'})
             nombre = contenido.find('atributo', {'nombre': 'NOMBRE'})
-            descripcion_entidad = contenido.find('atributo', {'nombre': 'DESCRIPCION-ENTIDAD'}).find_all(text=lambda tag: isinstance(tag, bs4.CData)).string.strip()
+            descripcion_entidad = contenido.find('atributo', {'nombre': 'DESCRIPCION-ENTIDAD'})
             horario = contenido.find('atributo', {'nombre': 'HORARIO'})
             equipamiento = contenido.find('atributo', {'nombre': 'EQUIPAMIENTO'})
             transporte = contenido.find('atributo', {'nombre': 'TRANSPORTE'})
@@ -129,6 +129,7 @@ class CargarBaseDatos():
                 localidad = localizacion.find('atributo', {'nombre': 'LOCALIDAD'})
                 provincia = localizacion.find('atributo', {'nombre': 'PROVINCIA'})
                 codigo_postal = localizacion.find('atributo', {'nombre': 'CODIGO-POSTAL'})
+                barrio = localizacion.find('atributo', {'nombre': 'BARRIO'})
                 distrito = localizacion.find('atributo', {'nombre': 'DISTRITO'})
                 coordenada_x = localizacion.find('atributo', {'nombre': 'COORDENADA-X'})
                 coordenada_y = localizacion.find('atributo', {'nombre': 'COORDENADA-Y'})
@@ -165,6 +166,7 @@ class CargarBaseDatos():
             museo['localidad'] = localidad.text
             museo['provincia'] = provincia.text
             museo['codigo_postal'] = codigo_postal.text
+            museo['barrio'] = barrio.text
             museo['distrito'] = distrito.text
             museo['coordenada_x'] = coordenada_x.text
             museo['coordenada_y'] = coordenada_y.text

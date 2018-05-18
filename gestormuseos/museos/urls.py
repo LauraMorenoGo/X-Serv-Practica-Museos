@@ -3,6 +3,7 @@ from django.contrib import admin
 from museos import views
 
 
+
 urlpatterns = [
     # Examples:
     # url(r'^$', 'gestormuseos.views.home', name='home'),

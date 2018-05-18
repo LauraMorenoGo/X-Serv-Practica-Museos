@@ -115,12 +115,19 @@ class MuseoDetalle(View):
         if not museo:   #necesito hacer un response redirect en django, me redirige a la pág ppal si no es válido
             return HttpResponseRedirect('/')
 
-        context['is_fav'] = museo.favoritos.filter(configuracion=user.config).count()#<-- id ¿  id de config
-        context['museo'] = museo
-        context['comentarios'] = museo.comentarios.all()
-        form = ComentarioForm()
-        context['form'] = form
-
+        
+        if request.user.is_anonymous:   #Error resuelto con Stackoverflow
+            context['museo'] = museo
+            context['comentarios'] = museo.comentarios.all()
+            form = ComentarioForm()
+            context['form'] = form
+        else:
+            context['is_fav'] = museo.favoritos.filter(configuracion=user.config).count()
+            context['museo'] = museo
+            context['comentarios'] = museo.comentarios.all()
+            form = ComentarioForm()
+            context['form'] = form
+            #return HttpResponseRedirect('/')
         
         return render(request, 'museos/mus.html', context)
 
