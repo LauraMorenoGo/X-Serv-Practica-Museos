@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-#Nuestro modelo va a tener tres clases: Museo, Configuración, Comentario
+#Nuestro modelo va a tener cuatro clases: Museo, Favorito, Configuración, Comentario
 
 
 class Museo(models.Model):
