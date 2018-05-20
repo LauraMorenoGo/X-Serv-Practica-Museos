@@ -22,5 +22,5 @@
 -Lectura de los datos del XML de museos con Beautiful Soup.<br><br>
 -Uso de las librerias de jQuery para JavaScript y Bootstrap en la implementación de DataTables para la página de usuario.<br><br>
 
-<b><li>Enlace funcionalidad básica:</b><br> </li><br>
-<b><li>Enlace funcionalidad opcional:</b><br> </li><br>
+<b><li>Enlace funcionalidad básica: https://www.youtube.com/watch?v=6h9rV-rmv3E</b><br> </li><br>
+<b><li>Enlace funcionalidad opcional: https://www.youtube.com/watch?v=Cn3ag4BoaAU</b><br> </li><br>
